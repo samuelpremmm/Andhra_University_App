@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andhra University Portal</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <meta name="theme-color" content="#8b1a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AU Portal">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            /* AU Maroon — from the crimson border/serpent ring of the emblem */
+            primary: {
+              50:  '#fdf3f3',
+              100: '#fbe5e5',
+              200: '#f5bfbf',
+              300: '#ec8888',
+              400: '#dc4545',
+              500: '#b81c1c',
+              600: '#8b1a1a',
+              700: '#6b1010',
+              800: '#4a0b0b',
+              900: '#330808',
+              950: '#200505'
+            },
+            /* AU Gold — from the sunflower petal ring of the emblem */
+            gold: {
+              50:  '#fefce8',
+              100: '#fef9c3',
+              200: '#fef08a',
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207',
+              800: '#854d0e',
+              900: '#713f12',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-amber-50/40 font-sans" style="background-color:#fdf6ee">
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 text-white flex flex-col flex-shrink-0 transition-all duration-300" style="background: linear-gradient(180deg, #200505 0%, #330808 40%, #200505 100%);">
+      <!-- AU Gold top bar -->
+      <div style="height:3px;background:linear-gradient(90deg,#8b1a1a,#ca8a04,#eab308,#ca8a04,#8b1a1a)"></div>
+
+      <!-- Logo -->
+      <div class="px-5 py-5 border-b" style="border-color:#4a0b0b">
+        <div class="flex items-center gap-3">
+          <!-- Andhra University Logo -->
+          <div class="flex-shrink-0 flex items-center justify-center shadow-xl rounded-xl" style="width:56px;height:64px;border:2px solid #ca8a04;background:#fff;padding:1px;">
+            <svg viewBox="0 0 100 112" xmlns="http://www.w3.org/2000/svg" width="52" height="59">
+
+              <!-- ===== LEFT COBRA ===== -->
+              <!-- Hood fan -->
+              <ellipse cx="24" cy="12" rx="20" ry="11" fill="#2d6b1a" transform="rotate(-22 24 12)"/>
+              <!-- Hood shading -->
+              <ellipse cx="27" cy="14" rx="11" ry="6.5" fill="#1d4d12" transform="rotate(-18 27 14)"/>
+              <!-- Body -->
+              <path d="M32,22 C27,30 23,40 22,50 C21,60 23,70 26,78 C29,86 33,92 38,97 C42,101 46,103 49,104"
+                    fill="none" stroke="#2d6b1a" stroke-width="9" stroke-linecap="round"/>
+              <!-- Eye -->
+              <circle cx="33" cy="13" r="2.8" fill="#fde68a"/>
+              <circle cx="33.8" cy="13.4" r="1.3" fill="#111"/>
+              <!-- Tongue -->
+              <path d="M37,18 L41,23 M41,23 L43,21 M41,23 L43,25" fill="none" stroke="#dc2626" stroke-width="1.2" stroke-linecap="round"/>
+
+              <!-- ===== RIGHT COBRA ===== -->
+              <!-- Hood fan -->
+              <ellipse cx="76" cy="12" rx="20" ry="11" fill="#2d6b1a" transform="rotate(22 76 12)"/>
+              <!-- Hood shading -->
+              <ellipse cx="73" cy="14" rx="11" ry="6.5" fill="#1d4d12" transform="rotate(18 73 14)"/>
+              <!-- Body -->
+              <path d="M68,22 C73,30 77,40 78,50 C79,60 77,70 74,78 C71,86 67,92 62,97 C58,101 54,103 51,104"
+                    fill="none" stroke="#2d6b1a" stroke-width="9" stroke-linecap="round"/>
+              <!-- Eye -->
+              <circle cx="67" cy="13" r="2.8" fill="#fde68a"/>
+              <circle cx="66.2" cy="13.4" r="1.3" fill="#111"/>
+              <!-- Tongue -->
+              <path d="M63,18 L59,23 M59,23 L57,21 M59,23 L57,25" fill="none" stroke="#dc2626" stroke-width="1.2" stroke-linecap="round"/>
+
+              <!-- ===== CENTRAL RED CIRCLE ===== -->
+              <circle cx="50" cy="58" r="31" fill="#cc1818"/>
+              <circle cx="50" cy="58" r="31" fill="none" stroke="#d4a017" stroke-width="2.5"/>
+              <circle cx="50" cy="58" r="28.5" fill="none" stroke="#d4a017" stroke-width="0.6"/>
+
+              <!-- ===== LOTUS FLOWER ===== -->
+              <g transform="translate(50,58)">
+                <!-- 8 outer petals (cream-white) -->
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f8f5ee"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f3efe6" transform="rotate(45)"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f8f5ee" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f3efe6" transform="rotate(135)"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f8f5ee" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f3efe6" transform="rotate(225)"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f8f5ee" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-15" rx="5" ry="12" fill="#f3efe6" transform="rotate(315)"/>
+                <!-- 8 inner petals (pink-white) -->
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(22.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(67.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(112.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(157.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(202.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(247.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(292.5)"/>
+                <ellipse cx="0" cy="-9" rx="3.5" ry="7.5" fill="#fce8e8" transform="rotate(337.5)"/>
+                <!-- Gold center -->
+                <circle cx="0" cy="0" r="8" fill="#d4a017"/>
+                <circle cx="0" cy="0" r="6" fill="#eab308"/>
+                <circle cx="0" cy="0" r="3.5" fill="#fde68a"/>
+              </g>
+
+              <!-- ===== SWASTIKA (Hindu clockwise) at top of circle ===== -->
+              <g transform="translate(50,31) scale(0.62)" fill="#fde68a">
+                <rect x="-1.5" y="-7" width="3" height="14"/>
+                <rect x="-7" y="-1.5" width="14" height="3"/>
+                <!-- clockwise hooks -->
+                <rect x="1.5" y="-7" width="5.5" height="3"/>
+                <rect x="4" y="1.5" width="3" height="5.5"/>
+                <rect x="-7" y="4" width="5.5" height="3"/>
+                <rect x="-7" y="-7" width="3" height="5.5"/>
+              </g>
+
+              <!-- ===== TELUGU TEXT ===== -->
+              <text x="50" y="108" text-anchor="middle" font-family="'Noto Serif Telugu',serif" font-size="5.8" fill="#cc1818" font-weight="bold">ఆంధ్రవిశ్వకళాపరిషత్</text>
+            </svg>
+          </div>
+          <div>
+            <div class="font-black text-base leading-tight" style="color:#fef9c3">Andhra</div>
+            <div class="font-bold text-sm leading-tight" style="color:#fef9c3">University</div>
+            <div class="text-xs font-medium mt-0.5" style="color:#ca8a04">Student Portal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semester Badge -->
+      <div class="px-5 py-3 border-b" style="border-color:#4a0b0b">
+        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-full" style="background:rgba(202,138,4,0.12);color:#fde047;border:1px solid rgba(202,138,4,0.25)">
+          <span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block animate-pulse"></span>
+          Spring 2026 · Est. 1926
+        </span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 py-4 px-3 overflow-y-auto space-y-0.5" id="nav-menu">
+        <!-- rendered by JS -->
+      </nav>
+
+      <!-- User Info -->
+      <div class="px-4 py-4 border-t" style="border-color:#4a0b0b">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow flex-shrink-0" style="background:linear-gradient(135deg,#8b1a1a,#6b1010);border:1.5px solid #ca8a04;color:#fef9c3">A</div>
+          <div class="flex-1 min-w-0">
+            <div id="user-name" class="text-sm font-semibold truncate" style="color:#fef9c3">Admin User</div>
+            <div id="user-role-badge" class="text-xs font-bold truncate" style="color:#ca8a04">Admin</div>
+          </div>
+          <button onclick="doLogout()" title="Logout" class="text-xs px-2 py-1 rounded-lg" style="color:#ca8a04;background:rgba(202,138,4,0.1)" onmouseover="this.style.background='rgba(202,138,4,0.25)'" onmouseout="this.style.background='rgba(202,138,4,0.1)'">↩</button>
+        </div>
+      </div>
+      <!-- AU bottom gold bar -->
+      <div style="height:2px;background:linear-gradient(90deg,transparent,#ca8a04,transparent)"></div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+      <!-- AU Gold accent bar under header -->
+      <div style="height:3px;background:linear-gradient(90deg,#8b1a1a,#ca8a04,#eab308,#ca8a04,#8b1a1a)"></div>
+
+      <!-- Top Header -->
+      <header class="bg-white border-b px-6 py-4 flex items-center justify-between flex-shrink-0 shadow-sm" style="border-color:#f5bfbf">
+        <div class="flex items-center gap-4">
+          <button onclick="toggleSidebar()" class="text-gray-400 transition-colors p-1 rounded-lg" onmouseover="this.style.color='#8b1a1a';this.style.background='#fdf3f3'" onmouseout="this.style.color='';this.style.background=''">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <div>
+            <h1 id="page-title" class="text-lg font-bold text-gray-800 leading-tight">Dashboard</h1>
+            <p id="page-subtitle" class="text-xs text-gray-400">Andhra University · Spring 2026</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="current-date" class="text-sm text-gray-500 hidden sm:block"></div>
+          <!-- Notification Bell -->
+          <div class="relative">
+            <button onclick="toggleNotifications()" class="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+              <span id="notif-count" class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#8b1a1a;display:none">0</span>
+            </button>
+            <!-- Notification Panel -->
+            <div id="notif-panel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50" style="top:100%"></div>
+          </div>
+          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white text-xs font-bold shadow">A</div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <main class="flex-1 overflow-auto" id="content-area">
+        <div class="flex items-center justify-center h-full">
+          <div class="text-center">
+            <div class="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-gray-500">Loading...</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal overlay for detail views -->
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onclick="closeModal(event)">
+    <div id="modal-content" class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+    </div>
+  </div>
+
+  <!-- Login Overlay -->
+  <div id="login-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(32,5,5,0.92)">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+      <!-- Header -->
+      <div class="p-6 text-white text-center" style="background:linear-gradient(135deg,#200505,#8b1a1a)">
+        <div class="flex justify-center mb-3">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background:rgba(255,255,255,0.15);border:2px solid #ca8a04">
+            <span class="text-2xl font-black" style="color:#fde68a">AU</span>
+          </div>
+        </div>
+        <h2 class="text-xl font-black">Andhra University Portal</h2>
+        <p class="text-xs mt-1" style="color:#fde68a">Smart College App · Spring 2026</p>
+      </div>
+      <!-- Form -->
+      <div class="p-6 space-y-4">
+        <select id="login-role" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary-400 bg-white font-medium">
+          <option value="">Select Your Role</option>
+          <option value="student">🎓 Student</option>
+          <option value="faculty">👩‍🏫 Faculty</option>
+          <option value="admin">⚙️ Admin</option>
+          <option value="dean">🏛️ Dean</option>
+        </select>
+        <input id="login-id" type="text" placeholder="Name / ID / Email" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary-400"/>
+        <input id="login-pass" type="password" placeholder="Password" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary-400" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <p id="login-error" class="text-xs text-red-500 font-medium min-h-4"></p>
+        <button onclick="doLogin()" class="w-full py-3 rounded-xl text-white font-bold text-sm transition-colors" style="background:#8b1a1a" onmouseover="this.style.background='#6b1010'" onmouseout="this.style.background='#8b1a1a'">
+          Sign In →
+        </button>
+        <p class="text-xs text-center text-gray-400">Demo passwords: admin123 · dean123 · faculty123 · student123</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts in dependency order -->
+  <script src="js/data.js"></script>
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/students.js"></script>
+  <script src="js/pages/faculty.js"></script>
+  <script src="js/pages/classes.js"></script>
+  <script src="js/pages/events.js"></script>
+  <script src="js/pages/exams.js"></script>
+  <script src="js/pages/departments.js"></script>
+  <script src="js/pages/analytics.js"></script>
+  <script src="js/pages/fees.js"></script>
+  <script src="js/pages/placements.js"></script>
+  <script src="js/pages/certificates.js"></script>
+  <script src="js/pages/map.js"></script>
+  <script src="js/pages/library.js"></script>
+  <script src="js/pages/hostel.js"></script>
+  <script src="js/pages/alumni.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('AU Portal SW registered:', reg.scope))
+          .catch(err => console.warn('SW registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
