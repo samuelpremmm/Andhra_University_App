@@ -199,46 +199,262 @@ function markAllRead() {
   renderNotifications();
 }
 
-// ---- Login ----
-function showLogin() { document.getElementById('login-overlay').classList.remove('hidden'); }
+// ============================================================
+// AUTH — Sign In / Sign Up / OTP / Forgot Password
+// ============================================================
 
+// Role initial letters for avatars
+const ROLE_LETTER = { student:'S', faculty:'F', admin:'A', dean:'D' };
+
+// Built-in demo credentials (role → password)
+const DEMO_CREDS = { admin:'admin123', dean:'dean123', faculty:'faculty123', student:'student123' };
+
+// --- LocalStorage user store ---
+function getUsers()          { return JSON.parse(localStorage.getItem('au_users') || '{}'); }
+function saveUsers(users)    { localStorage.setItem('au_users', JSON.stringify(users)); }
+function getRemembered()     { return JSON.parse(localStorage.getItem('au_remember') || 'null'); }
+function saveRemembered(d)   { localStorage.setItem('au_remember', JSON.stringify(d)); }
+function clearRemembered()   { localStorage.removeItem('au_remember'); }
+
+
+// ---- Show / Hide ----
+function showLogin() {
+  const overlay = document.getElementById('login-overlay');
+  overlay.classList.remove('hidden');
+  // Re-trigger card animation
+  const card = overlay.querySelector('.login-card');
+  card.classList.remove('shake');
+  void card.offsetWidth;
+  // Restore to credentials step / signin tab
+  document.getElementById('login-step-1').classList.remove('hidden');
+  document.getElementById('login-step-3').classList.add('hidden');
+  document.getElementById('forgot-panel').classList.add('hidden');
+  document.getElementById('login-tabs').classList.remove('hidden');
+  switchLoginTab('signin');
+  // Pre-fill remembered credentials
+  const rem = getRemembered();
+  if (rem) {
+    document.getElementById('login-role').value = rem.role || '';
+    document.getElementById('login-id').value   = rem.id   || '';
+    document.getElementById('remember-me').checked = true;
+  }
+}
+
+// ---- Tabs ----
+function switchLoginTab(tab) {
+  document.getElementById('signin-form').classList.toggle('hidden', tab !== 'signin');
+  document.getElementById('signup-form').classList.toggle('hidden', tab !== 'signup');
+  document.getElementById('tab-signin').classList.toggle('active', tab === 'signin');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('login-error').textContent  = '';
+  document.getElementById('signup-error').textContent = '';
+}
+
+// ---- Password visibility toggle ----
+function togglePwd(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else                          { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+// ---- Password strength ----
+document.addEventListener('input', function(e) {
+  if (e.target.id !== 'signup-pass') return;
+  const v = e.target.value;
+  let score = 0;
+  if (v.length >= 8) score++;
+  if (/[A-Z]/.test(v)) score++;
+  if (/[0-9]/.test(v)) score++;
+  if (/[^A-Za-z0-9]/.test(v)) score++;
+  const bar = document.getElementById('pwd-strength-bar');
+  const lbl = document.getElementById('pwd-strength-label');
+  if (!bar) return;
+  const configs = [
+    {w:'0%',   bg:'#e5e7eb', label:'',         color:'#9ca3af'},
+    {w:'25%',  bg:'#ef4444', label:'Weak',      color:'#ef4444'},
+    {w:'50%',  bg:'#f97316', label:'Fair',      color:'#f97316'},
+    {w:'75%',  bg:'#eab308', label:'Good',      color:'#eab308'},
+    {w:'100%', bg:'#22c55e', label:'Strong ✓',  color:'#22c55e'},
+  ];
+  const cfg = configs[score];
+  bar.style.width      = cfg.w;
+  bar.style.background = cfg.bg;
+  lbl.textContent      = cfg.label;
+  lbl.style.color      = cfg.color;
+});
+
+// ---- Shake helper ----
+function shakeCard() {
+  const card = document.querySelector('.login-card');
+  card.classList.remove('shake');
+  void card.offsetWidth;
+  card.classList.add('shake');
+}
+
+// ============================================================
+// SIGN IN
+// ============================================================
 function doLogin() {
   const role = document.getElementById('login-role').value;
   const id   = document.getElementById('login-id').value.trim();
-  const pass = document.getElementById('login-pass').value.trim();
+  const pass = document.getElementById('login-pass').value;
   const err  = document.getElementById('login-error');
+  err.textContent = '';
 
-  if (!role || !id || !pass) { err.textContent = 'Please fill in all fields.'; return; }
+  if (!role || !id || !pass) { err.textContent = 'Please fill in all fields.'; shakeCard(); return; }
 
-  const creds = { admin:'admin123', dean:'dean123', faculty:'faculty123', student:'student123' };
-  if (creds[role] !== pass) {
-    err.textContent = `Wrong password. Hint: ${role}123`;
+  // Check custom users first, then demo creds
+  const users = getUsers();
+  const userKey = `${role}:${id.toLowerCase()}`;
+  let userName = id;
+  let authOk   = false;
+
+  if (users[userKey]) {
+    authOk   = users[userKey].password === btoa(pass);
+    userName = users[userKey].name;
+  } else {
+    // Demo built-in
+    authOk = (DEMO_CREDS[role] === pass);
+  }
+
+  if (!authOk) {
+    err.textContent = 'Incorrect credentials. Please try again.';
+    shakeCard();
     return;
   }
 
-  sessionStorage.setItem('au_role', role);
-  sessionStorage.setItem('au_user', JSON.stringify({ name:id, id:id }));
-  document.getElementById('login-overlay').classList.add('hidden');
-  document.getElementById('user-name').textContent       = id;
-  document.getElementById('user-role-badge').textContent = ROLES[role].label;
-  document.getElementById('user-role-badge').style.color = ROLES[role].color;
-  buildNav();
-  renderCurrentPage();
+  // Remember me
+  if (document.getElementById('remember-me').checked) {
+    saveRemembered({ role, id });
+  } else {
+    clearRemembered();
+  }
+
+  completeLogin(role, id, userName);
 }
 
+// ============================================================
+// SIGN UP
+// ============================================================
+function doSignUp() {
+  const role  = document.getElementById('signup-role').value;
+  const name  = document.getElementById('signup-name').value.trim();
+  const uid   = document.getElementById('signup-uid').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const pass  = document.getElementById('signup-pass').value;
+  const pass2 = document.getElementById('signup-pass2').value;
+  const err   = document.getElementById('signup-error');
+  err.textContent = '';
+
+  if (!role || !name || !uid || !email || !pass || !pass2) {
+    err.textContent = 'Please fill in all fields.'; shakeCard(); return;
+  }
+  if (pass.length < 8) {
+    err.textContent = 'Password must be at least 8 characters.'; shakeCard(); return;
+  }
+  if (pass !== pass2) {
+    err.textContent = 'Passwords do not match.'; shakeCard(); return;
+  }
+  if (!email.includes('@')) {
+    err.textContent = 'Please enter a valid email address.'; shakeCard(); return;
+  }
+
+  const users   = getUsers();
+  const userKey = `${role}:${uid.toLowerCase()}`;
+  if (users[userKey]) {
+    err.textContent = 'This ID is already registered. Please sign in.'; shakeCard(); return;
+  }
+
+  // Save user and log in directly
+  const users2 = getUsers();
+  users2[`${role}:${uid.toLowerCase()}`] = { name, email, password: btoa(pass), role };
+  saveUsers(users2);
+  completeLogin(role, uid.toLowerCase(), name);
+}
+
+
+function completeLogin(role, userId, name) {
+  document.getElementById('login-step-1').classList.add('hidden');
+  document.getElementById('login-tabs').classList.add('hidden');
+  document.getElementById('login-step-3').classList.remove('hidden');
+  document.getElementById('login-success-msg').textContent = `Signing you in as ${name} (${ROLES[role]?.label})…`;
+  sessionStorage.setItem('au_role', role);
+  sessionStorage.setItem('au_user', JSON.stringify({ name, id: userId }));
+
+  setTimeout(() => {
+    document.getElementById('login-overlay').classList.add('hidden');
+    updateUserInfo();
+    buildNav();
+    renderCurrentPage();
+  }, 1400);
+}
+
+// ============================================================
+// FORGOT PASSWORD
+// ============================================================
+function showForgotPassword() {
+  document.getElementById('login-step-1').classList.add('hidden');
+  document.getElementById('login-tabs').classList.add('hidden');
+  document.getElementById('forgot-panel').classList.remove('hidden');
+  document.getElementById('forgot-step-1').classList.remove('hidden');
+  document.getElementById('forgot-step-3').classList.add('hidden');
+  document.getElementById('forgot-error').textContent = '';
+  document.getElementById('forgot-email').value = '';
+  document.getElementById('new-pass').value = '';
+  document.getElementById('new-pass2').value = '';
+}
+
+function hideForgotPassword() {
+  document.getElementById('forgot-panel').classList.add('hidden');
+  document.getElementById('login-step-1').classList.remove('hidden');
+  document.getElementById('login-tabs').classList.remove('hidden');
+}
+
+function doResetPassword() {
+  const email    = document.getElementById('forgot-email').value.trim();
+  const newPass  = document.getElementById('new-pass').value;
+  const newPass2 = document.getElementById('new-pass2').value;
+  const err      = document.getElementById('forgot-error');
+  err.textContent = '';
+
+  if (!email || !email.includes('@')) { err.textContent = 'Enter a valid email address.'; return; }
+  if (newPass.length < 8)             { err.textContent = 'Password must be at least 8 characters.'; return; }
+  if (newPass !== newPass2)           { err.textContent = 'Passwords do not match.'; shakeCard(); return; }
+
+  const users = getUsers();
+  let found = false;
+  Object.keys(users).forEach(key => {
+    if (users[key].email === email) { users[key].password = btoa(newPass); found = true; }
+  });
+  if (!found) { err.textContent = 'No account found with that email.'; shakeCard(); return; }
+  saveUsers(users);
+
+  document.getElementById('forgot-step-1').classList.add('hidden');
+  document.getElementById('forgot-step-3').classList.remove('hidden');
+}
+
+// ---- Logout ----
 function doLogout() {
   sessionStorage.removeItem('au_role');
   sessionStorage.removeItem('au_user');
   showLogin();
 }
 
+// ---- Update UI after login ----
 function updateUserInfo() {
-  const user = getCurrentUser();
-  const role = getCurrentRole();
-  const el   = document.getElementById('user-name');
-  const badge= document.getElementById('user-role-badge');
+  const user   = getCurrentUser();
+  const role   = getCurrentRole();
+  const letter = ROLE_LETTER[role] || 'A';
+
+  const el    = document.getElementById('user-name');
+  const badge = document.getElementById('user-role-badge');
+  const sAvt  = document.getElementById('sidebar-avatar');
+  const hAvt  = document.getElementById('header-avatar');
+
   if (el)    el.textContent    = user.name;
   if (badge) { badge.textContent = ROLES[role]?.label || 'Admin'; badge.style.color = ROLES[role]?.color || '#8b1a1a'; }
+  if (sAvt)  sAvt.textContent  = letter;
+  if (hAvt)  hAvt.textContent  = letter;
 }
 
 // ---- Init ----
