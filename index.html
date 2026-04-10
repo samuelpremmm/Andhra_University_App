@@ -2,15 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Andhra University Portal</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+
+  <!-- PWA / theme -->
   <meta name="theme-color" content="#8b1a1a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="AU Portal">
+
+  <!-- iOS full-screen app -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="AU Portal">
-  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
+  <link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png">
+
+  <!-- iOS splash screens -->
+  <link rel="apple-touch-startup-image" href="icons/icon-512.png">
+
+  <!-- Windows / Edge tiles -->
+  <meta name="msapplication-TileImage" content="icons/icon-144.png">
+  <meta name="msapplication-TileColor" content="#8b1a1a">
+  <meta name="msapplication-config" content="none">
+
+  <!-- SEO / sharing -->
+  <meta name="description" content="Andhra University Smart Campus App — Students, Faculty, Fees, Exams, Placements & more.">
+  <meta property="og:title" content="Andhra University Portal">
+  <meta property="og:description" content="Smart Campus App for Andhra University">
+  <meta property="og:image" content="icons/icon-512.png">
+  <meta property="og:type" content="website">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
@@ -53,6 +79,101 @@
   </script>
 </head>
 <body class="bg-amber-50/40 font-sans" style="background-color:#fdf6ee">
+
+  <!-- ══ APP SPLASH SCREEN (shown while loading) ══ -->
+  <div id="app-splash" style="
+    position:fixed;inset:0;z-index:9999;
+    background:linear-gradient(135deg,#200505 0%,#3d0808 50%,#200505 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity 0.5s ease;
+  ">
+    <div style="animation:splashLogoIn 0.7s cubic-bezier(0.175,0.885,0.32,1.275) both">
+      <div style="width:108px;height:108px;border-radius:24px;background:linear-gradient(135deg,#1a0303,#3d0808);border:2.5px solid #ca8a04;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 40px rgba(202,138,4,0.3);margin:0 auto 24px">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+          <defs>
+            <linearGradient id="splashBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a0303"/><stop offset="100%" stop-color="#3d0808"/></linearGradient>
+            <linearGradient id="splashGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#eab308"/><stop offset="100%" stop-color="#ca8a04"/></linearGradient>
+          </defs>
+          <rect width="512" height="512" rx="96" fill="url(#splashBg)"/>
+          <polygon points="256,36 468,152 468,384 256,500 44,384 44,152" fill="none" stroke="url(#splashGold)" stroke-width="10" opacity="0.65"/>
+          <rect x="88" y="296" width="336" height="168" rx="18" fill="url(#splashGold)"/>
+          <rect x="98" y="308" width="152" height="144" rx="12" fill="#fef9c3"/>
+          <rect x="262" y="308" width="152" height="144" rx="12" fill="#fde68a"/>
+          <rect x="246" y="308" width="20" height="144" fill="url(#splashGold)"/>
+          <polygon points="256,100 420,184 256,268 92,184" fill="url(#splashGold)"/>
+          <rect x="400" y="184" width="18" height="82" rx="9" fill="url(#splashGold)"/>
+          <circle cx="409" cy="278" r="22" fill="#eab308"/>
+          <text x="256" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="900" fill="#1a0303" letter-spacing="-1">AU</text>
+        </svg>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:26px;font-weight:900;color:#fef9c3;letter-spacing:0.5px">Andhra University</div>
+        <div style="font-size:13px;font-weight:600;color:#ca8a04;margin-top:4px;letter-spacing:1px">SMART CAMPUS PORTAL</div>
+      </div>
+    </div>
+    <!-- Loading bar -->
+    <div style="margin-top:48px;width:180px;height:3px;background:rgba(255,255,255,0.1);border-radius:999px;overflow:hidden">
+      <div id="splash-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#8b1a1a,#ca8a04,#eab308);border-radius:999px;animation:splashBar 1.8s ease forwards"></div>
+    </div>
+    <p style="margin-top:14px;font-size:11px;color:rgba(253,230,138,0.5);letter-spacing:1.5px">LOADING…</p>
+  </div>
+
+  <!-- ══ INSTALL BANNER ══ -->
+  <div id="install-banner" style="
+    display:none;position:fixed;bottom:0;left:0;right:0;z-index:8888;
+    padding:12px 16px;
+    background:linear-gradient(135deg,#200505,#3d0808);
+    border-top:2px solid #ca8a04;
+    box-shadow:0 -4px 24px rgba(0,0,0,0.4);
+    animation:bannerSlideUp 0.4s ease;
+  ">
+    <div style="max-width:520px;margin:0 auto;display:flex;align-items:center;gap:14px;">
+      <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1a0303,#3d0808);border:1.5px solid #ca8a04;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+          <rect width="512" height="512" rx="96" fill="#1a0303"/>
+          <polygon points="256,36 468,152 468,384 256,500 44,384 44,152" fill="none" stroke="#ca8a04" stroke-width="10" opacity="0.65"/>
+          <polygon points="256,100 420,184 256,268 92,184" fill="#ca8a04"/>
+          <rect x="88" y="296" width="336" height="168" rx="18" fill="#ca8a04"/>
+          <rect x="98" y="308" width="152" height="144" rx="12" fill="#fef9c3"/>
+          <rect x="262" y="308" width="152" height="144" rx="12" fill="#fde68a"/>
+          <rect x="246" y="308" width="20" height="144" fill="#ca8a04"/>
+          <text x="256" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="900" fill="#1a0303" letter-spacing="-1">AU</text>
+        </svg>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:800;font-size:14px;color:#fef9c3">Install AU Portal</div>
+        <div style="font-size:12px;color:#ca8a04;margin-top:1px">Add to home screen for instant access — works offline</div>
+      </div>
+      <button id="install-btn" onclick="triggerInstall()" style="
+        background:linear-gradient(135deg,#ca8a04,#eab308);color:#1a0303;
+        border:none;border-radius:10px;padding:9px 18px;
+        font-weight:800;font-size:13px;cursor:pointer;flex-shrink:0;
+        box-shadow:0 2px 10px rgba(202,138,4,0.4);
+      ">Install</button>
+      <button onclick="dismissBanner()" style="background:none;border:none;color:rgba(253,230,138,0.5);cursor:pointer;font-size:20px;line-height:1;flex-shrink:0;padding:4px">×</button>
+    </div>
+  </div>
+
+  <!-- ══ iOS INSTALL INSTRUCTIONS (Safari only) ══ -->
+  <div id="ios-banner" style="
+    display:none;position:fixed;bottom:0;left:0;right:0;z-index:8888;
+    padding:14px 16px 24px;
+    background:linear-gradient(135deg,#200505,#3d0808);
+    border-top:2px solid #ca8a04;
+    text-align:center;
+    animation:bannerSlideUp 0.4s ease;
+  ">
+    <button onclick="dismissBanner()" style="position:absolute;top:10px;right:16px;background:none;border:none;color:rgba(253,230,138,0.5);cursor:pointer;font-size:22px">×</button>
+    <p style="color:#fef9c3;font-weight:800;font-size:14px;margin:0 0 6px">Install AU Portal on iPhone / iPad</p>
+    <p style="color:#ca8a04;font-size:12px;margin:0">Tap <strong style="color:#fde68a">Share</strong> <span style="font-size:16px">⬆</span> then <strong style="color:#fde68a">"Add to Home Screen"</strong> <span style="font-size:14px">➕</span></p>
+  </div>
+
+  <style>
+    @keyframes splashLogoIn { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
+    @keyframes splashBar { 0%{width:0%} 60%{width:75%} 100%{width:100%} }
+    @keyframes bannerSlideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  </style>
+
   <div class="flex h-screen overflow-hidden">
 
     <!-- Sidebar -->
@@ -331,7 +452,7 @@
   <script src="js/app.js"></script>
   <script src="js/chatbot.js"></script>
   <script>
-    // PWA service worker
+    // ── Service Worker ──────────────────────────────────
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -339,7 +460,65 @@
           .catch(err => console.warn('SW registration failed:', err));
       });
     }
-    // Close notifications panel when clicking outside
+
+    // ── Splash screen ────────────────────────────────────
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('app-splash');
+        if (splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => splash.style.display = 'none', 500);
+        }
+      }, 1800);
+    });
+
+    // ── Install prompt (Android / Windows / Desktop Chrome) ──
+    let _installPrompt = null;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      _installPrompt = e;
+      if (!sessionStorage.getItem('au_install_dismissed')) {
+        setTimeout(() => {
+          document.getElementById('install-banner').style.display = 'block';
+        }, 4000);
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('install-banner').style.display = 'none';
+      sessionStorage.setItem('au_install_dismissed', '1');
+      console.log('AU Portal installed!');
+    });
+
+    function triggerInstall() {
+      if (_installPrompt) {
+        _installPrompt.prompt();
+        _installPrompt.userChoice.then(choice => {
+          if (choice.outcome === 'accepted') {
+            document.getElementById('install-banner').style.display = 'none';
+          }
+          _installPrompt = null;
+        });
+      }
+    }
+
+    function dismissBanner() {
+      document.getElementById('install-banner').style.display = 'none';
+      document.getElementById('ios-banner').style.display     = 'none';
+      sessionStorage.setItem('au_install_dismissed', '1');
+    }
+
+    // ── iOS "Add to Home Screen" hint (Safari only) ──────
+    const isIOS     = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isSafari  = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const isStandalone = window.navigator.standalone === true;
+    if (isIOS && isSafari && !isStandalone && !sessionStorage.getItem('au_install_dismissed')) {
+      setTimeout(() => {
+        document.getElementById('ios-banner').style.display = 'block';
+      }, 4000);
+    }
+
+    // ── Close notifications panel when clicking outside ──
     document.addEventListener('click', function(e) {
       const panel  = document.getElementById('notif-panel');
       const bell   = e.target.closest('button[onclick="toggleNotifications()"]');

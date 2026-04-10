@@ -1,38 +1,148 @@
 <!DOCTYPE html>
-<html>
-<head><title>Icon Generator</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AU Portal — Generate App Icons</title>
+  <style>
+    body { font-family: sans-serif; background: #1a0303; color: #fef9c3; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; min-height: 100vh; margin: 0; }
+    h1 { color: #ca8a04; margin-bottom: 4px; }
+    p  { color: #fde68a; margin-bottom: 32px; font-size: 14px; text-align: center; max-width: 480px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; margin-bottom: 32px; }
+    .icon-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(202,138,4,0.3); border-radius: 16px; padding: 20px; text-align: center; }
+    canvas { display: block; border-radius: 12px; margin-bottom: 12px; }
+    button {
+      background: linear-gradient(135deg,#ca8a04,#eab308); color: #1a0303;
+      border: none; border-radius: 8px; padding: 8px 18px;
+      font-weight: 700; font-size: 13px; cursor: pointer; width: 100%;
+    }
+    button:hover { opacity: 0.9; }
+    .gen-all {
+      background: linear-gradient(135deg,#8b1a1a,#6b1010); color: #fef9c3;
+      border: none; border-radius: 12px; padding: 14px 40px;
+      font-weight: 800; font-size: 16px; cursor: pointer; margin-bottom: 16px;
+    }
+    .gen-all:hover { opacity: 0.9; }
+    .note { font-size: 12px; color: #ca8a04; text-align: center; max-width: 480px; line-height: 1.6; }
+    .status { margin-top: 12px; font-size: 13px; color: #4ade80; min-height: 20px; }
+  </style>
+</head>
 <body>
-<p>Click each button to download the PNG icon.</p>
-<canvas id="c192" width="192" height="192" style="border:1px solid #ccc;display:block;margin:10px"></canvas>
-<canvas id="c512" width="512" height="512" style="border:1px solid #ccc;display:block;margin:10px"></canvas>
-<button onclick="gen(192)">Download icon-192.png</button>
-<button onclick="gen(512)">Download icon-512.png</button>
+  <h1>AU Portal — App Icon Generator</h1>
+  <p>Click "Generate All Icons" to download all required PNG icons for Android, iOS, and Windows install support.</p>
 
-<script>
-function gen(size) {
-  const canvas = document.getElementById('c' + size);
-  const ctx = canvas.getContext('2d');
-  const img = new Image();
-  img.onload = function() {
-    ctx.clearRect(0, 0, size, size);
-    ctx.drawImage(img, 0, 0, size, size);
-    const a = document.createElement('a');
-    a.download = 'icon-' + size + '.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-  };
-  img.src = 'icon.svg';
-}
-// Auto-render previews
-window.onload = function() {
-  [192, 512].forEach(size => {
-    const canvas = document.getElementById('c' + size);
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.onload = () => ctx.drawImage(img, 0, 0, size, size);
-    img.src = 'icon.svg';
-  });
-};
-</script>
+  <button class="gen-all" onclick="generateAll()">⬇ Generate &amp; Download All Icons</button>
+  <div class="status" id="status"></div>
+
+  <div class="grid">
+    <div class="icon-card">
+      <canvas id="c72"  width="72"  height="72"></canvas>
+      <button onclick="downloadIcon(72)">icon-72.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c96"  width="96"  height="96"></canvas>
+      <button onclick="downloadIcon(96)">icon-96.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c128" width="128" height="128"></canvas>
+      <button onclick="downloadIcon(128)">icon-128.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c144" width="144" height="144"></canvas>
+      <button onclick="downloadIcon(144)">icon-144.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c152" width="152" height="152"></canvas>
+      <button onclick="downloadIcon(152)">icon-152.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c192" width="192" height="192"></canvas>
+      <button onclick="downloadIcon(192)">icon-192.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c256" width="256" height="256"></canvas>
+      <button onclick="downloadIcon(256)">icon-256.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c384" width="384" height="384"></canvas>
+      <button onclick="downloadIcon(384)">icon-384.png</button>
+    </div>
+    <div class="icon-card">
+      <canvas id="c512" width="512" height="512"></canvas>
+      <button onclick="downloadIcon(512)">icon-512.png</button>
+    </div>
+  </div>
+
+  <p class="note">
+    After downloading, place all PNG files inside the <strong>icons/</strong> folder next to this file.<br>
+    These icons are needed for Android home screen, iOS Add to Home Screen, and Windows taskbar installation.
+  </p>
+
+  <script>
+    const SIZES = [72, 96, 128, 144, 152, 192, 256, 384, 512];
+    const svgUrl = 'icon.svg';
+    let loadedImg = null;
+
+    function loadSVG() {
+      return new Promise((resolve, reject) => {
+        if (loadedImg) { resolve(loadedImg); return; }
+        const img = new Image();
+        img.onload  = () => { loadedImg = img; resolve(img); };
+        img.onerror = reject;
+        img.src = svgUrl;
+      });
+    }
+
+    function drawToCanvas(img, size) {
+      const canvas = document.getElementById('c' + size);
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, size, size);
+      ctx.drawImage(img, 0, 0, size, size);
+    }
+
+    function downloadIcon(size) {
+      loadSVG().then(img => {
+        drawToCanvas(img, size);
+        const canvas = document.getElementById('c' + size);
+        const a = document.createElement('a');
+        a.download = `icon-${size}.png`;
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      });
+    }
+
+    async function generateAll() {
+      const status = document.getElementById('status');
+      status.textContent = 'Loading icon…';
+      try {
+        const img = await loadSVG();
+        for (let i = 0; i < SIZES.length; i++) {
+          const size = SIZES[i];
+          status.textContent = `Generating ${size}×${size}… (${i+1}/${SIZES.length})`;
+          drawToCanvas(img, size);
+          await new Promise(r => setTimeout(r, 80));
+          const canvas = document.getElementById('c' + size);
+          const a = document.createElement('a');
+          a.download = `icon-${size}.png`;
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+          await new Promise(r => setTimeout(r, 120));
+        }
+        status.textContent = `✓ All ${SIZES.length} icons downloaded! Place them in the icons/ folder.`;
+      } catch(e) {
+        status.textContent = 'Error: ' + e.message;
+        status.style.color = '#f87171';
+      }
+    }
+
+    // Render all previews on load
+    window.addEventListener('load', async () => {
+      try {
+        const img = await loadSVG();
+        SIZES.forEach(size => drawToCanvas(img, size));
+      } catch(e) {
+        document.getElementById('status').textContent = 'Could not load icon.svg — make sure this file is in the icons/ folder.';
+      }
+    });
+  </script>
 </body>
 </html>
