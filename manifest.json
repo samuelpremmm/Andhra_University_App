@@ -2,8 +2,8 @@
   "name": "Andhra University Portal",
   "short_name": "AU Portal",
   "description": "Andhra University Smart Campus App — Students, Faculty, Fees, Exams, Placements & more.",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/Andhra_University_App/index.html",
+  "scope": "/Andhra_University_App/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
@@ -29,45 +29,29 @@
       "name": "Dashboard",
       "short_name": "Home",
       "description": "University overview",
-      "url": "./index.html#dashboard",
+      "url": "/Andhra_University_App/index.html#dashboard",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "My Fees",
       "short_name": "Fees",
       "description": "Fee structure & payment",
-      "url": "./index.html#fees",
+      "url": "/Andhra_University_App/index.html#fees",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Exam Schedule",
       "short_name": "Exams",
       "description": "Mid-term and final exam timetable",
-      "url": "./index.html#exams",
+      "url": "/Andhra_University_App/index.html#exams",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
     },
     {
       "name": "Certificates",
       "short_name": "Certs",
       "description": "Request & download certificates",
-      "url": "./index.html#certificates",
+      "url": "/Andhra_University_App/index.html#certificates",
       "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "icons/screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "AU Portal Dashboard on Desktop"
-    },
-    {
-      "src": "icons/screenshot-mobile.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "AU Portal on Mobile"
     }
   ]
 }

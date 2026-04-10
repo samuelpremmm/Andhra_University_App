@@ -1,41 +1,41 @@
 // ============================================================
-// Andhra University Portal — Service Worker v3
-// Strategy: Cache-first for app shell, network-first for CDN
+// Andhra University Portal — Service Worker v4
+// Works on both localhost and GitHub Pages subdirectory
 // ============================================================
 
-const CACHE_NAME    = 'au-portal-v3';
-const CDN_CACHE     = 'au-cdn-v3';
+const CACHE_NAME = 'au-portal-v4';
 
-// App shell — cache on install
+// Detect base path automatically (works for both localhost and GitHub Pages)
+const BASE = self.registration.scope;
+
 const SHELL_ASSETS = [
-  './',
-  './index.html',
-  './css/style.css',
-  './manifest.json',
-  './js/app.js',
-  './js/data.js',
-  './js/chatbot.js',
-  './js/pages/dashboard.js',
-  './js/pages/students.js',
-  './js/pages/faculty.js',
-  './js/pages/classes.js',
-  './js/pages/events.js',
-  './js/pages/exams.js',
-  './js/pages/departments.js',
-  './js/pages/analytics.js',
-  './js/pages/fees.js',
-  './js/pages/placements.js',
-  './js/pages/certificates.js',
-  './js/pages/map.js',
-  './js/pages/library.js',
-  './js/pages/hostel.js',
-  './js/pages/alumni.js',
-  './icons/icon.svg',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
+  BASE,
+  BASE + 'index.html',
+  BASE + 'css/style.css',
+  BASE + 'manifest.json',
+  BASE + 'js/app.js',
+  BASE + 'js/data.js',
+  BASE + 'js/chatbot.js',
+  BASE + 'js/pages/dashboard.js',
+  BASE + 'js/pages/students.js',
+  BASE + 'js/pages/faculty.js',
+  BASE + 'js/pages/classes.js',
+  BASE + 'js/pages/events.js',
+  BASE + 'js/pages/exams.js',
+  BASE + 'js/pages/departments.js',
+  BASE + 'js/pages/analytics.js',
+  BASE + 'js/pages/fees.js',
+  BASE + 'js/pages/placements.js',
+  BASE + 'js/pages/certificates.js',
+  BASE + 'js/pages/map.js',
+  BASE + 'js/pages/library.js',
+  BASE + 'js/pages/hostel.js',
+  BASE + 'js/pages/alumni.js',
+  BASE + 'icons/icon.svg',
+  BASE + 'icons/icon-192.png',
+  BASE + 'icons/icon-512.png',
 ];
 
-// CDN assets — cache after first fetch
 const CDN_HOSTS = [
   'cdn.tailwindcss.com',
   'cdn.jsdelivr.net',
@@ -46,14 +46,13 @@ const CDN_HOSTS = [
 // ── Install ──────────────────────────────────────────────────
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      // Cache shell assets, skip missing ones (e.g. PNGs not yet generated)
-      return Promise.allSettled(
+    caches.open(CACHE_NAME).then(cache =>
+      Promise.allSettled(
         SHELL_ASSETS.map(url =>
           cache.add(url).catch(() => console.warn('[SW] Skipped:', url))
         )
-      );
-    })
+      )
+    )
   );
   self.skipWaiting();
 });
@@ -63,9 +62,7 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys
-          .filter(k => k !== CACHE_NAME && k !== CDN_CACHE)
-          .map(k => { console.log('[SW] Deleting old cache:', k); return caches.delete(k); })
+        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
       )
     )
   );
@@ -75,49 +72,43 @@ self.addEventListener('activate', event => {
 // ── Fetch ─────────────────────────────────────────────────────
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-
-  // Skip non-GET and browser-extension requests
   if (event.request.method !== 'GET') return;
   if (!url.protocol.startsWith('http')) return;
 
-  // CDN assets — stale-while-revalidate
+  // CDN — stale while revalidate
   if (CDN_HOSTS.some(h => url.hostname.includes(h))) {
-    event.respondWith(staleWhileRevalidate(event.request, CDN_CACHE));
+    event.respondWith(staleWhileRevalidate(event.request));
     return;
   }
 
-  // App shell — cache-first, fallback to index.html for navigation
+  // App shell — cache first, network fallback
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request)
         .then(response => {
-          // Cache successful same-origin responses
           if (response.ok && url.origin === self.location.origin) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
+            caches.open(CACHE_NAME).then(c => c.put(event.request, response.clone()));
           }
           return response;
         })
         .catch(() => {
-          // Offline fallback — serve app shell for navigation requests
           if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
+            return caches.match(BASE + 'index.html');
           }
         });
     })
   );
 });
 
-// ── Stale-while-revalidate helper ────────────────────────────
-function staleWhileRevalidate(request, cacheName) {
-  return caches.open(cacheName).then(cache =>
+function staleWhileRevalidate(request) {
+  return caches.open(CACHE_NAME).then(cache =>
     cache.match(request).then(cached => {
-      const networkFetch = fetch(request).then(response => {
-        if (response.ok) cache.put(request, response.clone());
-        return response;
+      const fresh = fetch(request).then(r => {
+        if (r.ok) cache.put(request, r.clone());
+        return r;
       }).catch(() => {});
-      return cached || networkFetch;
+      return cached || fresh;
     })
   );
 }
