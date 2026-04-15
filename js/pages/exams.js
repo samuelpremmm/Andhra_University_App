@@ -112,11 +112,10 @@ function submitExamRegistration() {
 // Exam Timings Page
 // ============================================================
 function renderExams() {
-  if (getCurrentRole() === 'student') return renderExamRegistration();
-
   const exams   = AppData.exams;
   const midterm = exams.filter(x => x.type === 'Mid-Term');
   const finals  = exams.filter(x => x.type === 'Final');
+  const isStudent = getCurrentRole() === 'student';
 
   function examRow(x) {
     const isUpcomingExam = isUpcoming(x.date);
@@ -153,6 +152,21 @@ function renderExams() {
 
   return `
   <div class="p-6 space-y-5">
+
+    <!-- Student: registration shortcut -->
+    ${isStudent ? `
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📝</span>
+        <div>
+          <div class="font-semibold text-blue-800">Exam Registration Open</div>
+          <div class="text-sm text-blue-600">Register for the upcoming semester exams before the deadline.</div>
+        </div>
+      </div>
+      <button onclick="showModal(renderExamRegistration())" style="background:#1d4ed8;color:white;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">
+        Register
+      </button>
+    </div>` : ''}
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
