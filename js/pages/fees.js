@@ -44,7 +44,7 @@ function renderFees() {
         '<h2 class="text-lg font-black text-gray-800">Semester-wise Fee Structure</h2>',
         '<p class="text-xs text-gray-400 mt-0.5">Select your department to see per-semester fee breakdown</p>',
       '</div>',
-      '<span class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full" style="background:#fef9c3;color:#a16207">',
+      '<span class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full" style="background:#e0f2fe;color:#a16207">',
         '⚠️ Current Due: 15 June 2026',
       '</span>',
     '</div>',
@@ -64,7 +64,7 @@ function renderFees() {
           '<span id="fees-dept-badge" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold" style="background:#eff6ff;color:#1d4ed8">',
             '💻 CSE',
           '</span>',
-          '<button onclick="showFeesSummary()" class="text-xs font-semibold px-3 py-1.5 rounded-xl text-white" style="background:#8b1a1a" onmouseover="this.style.background=\'#6b1010\'" onmouseout="this.style.background=\'#8b1a1a\'">',
+          '<button onclick="showFeesSummary()" class="text-xs font-semibold px-3 py-1.5 rounded-xl text-white" style="background:#1d4ed8" onmouseover="this.style.background=\'#1e40af\'" onmouseout="this.style.background=\'#1d4ed8\'">',
             '📊 Fee Summary',
           '</button>',
         '</div>',
@@ -100,7 +100,7 @@ function renderFees() {
       '</div>',
 
       // Scholarship
-      '<div class="rounded-2xl p-4" style="background:#fef9c3;border:1px solid #fde047">',
+      '<div class="rounded-2xl p-4" style="background:#e0f2fe;border:1px solid #fde047">',
         '<h3 class="font-bold text-amber-800 mb-2 text-sm">🎓 Scholarships</h3>',
         '<ul class="text-xs text-amber-700 space-y-1">',
           '<li>• SC/ST → <b>Full tuition waiver</b></li>',
@@ -140,7 +140,7 @@ function renderSemCards(dept) {
         '<div class="flex items-start justify-between">',
           '<div>',
             '<div class="text-base font-black text-gray-800">Sem ' + sem + '</div>',
-            '<div class="text-xs font-semibold" style="color:#8b1a1a">' + SEM_YEAR_LABEL[i] + '</div>',
+            '<div class="text-xs font-semibold" style="color:#1d4ed8">' + SEM_YEAR_LABEL[i] + '</div>',
             '<div class="text-xs text-gray-400">' + SEM_SESSION[i] + '</div>',
           '</div>',
           '<span class="text-xs font-bold px-2.5 py-1 rounded-full" style="background:' + statusBg + ';color:' + statusColor + '">' + statusLabel + '</span>',
@@ -168,7 +168,7 @@ function renderSemCards(dept) {
 
         // Action
         (status === 'due' ?
-          '<button onclick="showPayModal(\'' + dept + ' Sem-' + sem + '\', ' + total + ')" class="mt-2 w-full py-2 rounded-xl text-white text-xs font-bold transition-colors" style="background:#8b1a1a" onmouseover="this.style.background=\'#6b1010\'" onmouseout="this.style.background=\'#8b1a1a\'">🔒 Pay Now — ₹' + total.toLocaleString() + '</button>' :
+          '<button onclick="showPayModal(\'' + dept + ' Sem-' + sem + '\', ' + total + ')" class="mt-2 w-full py-2 rounded-xl text-white text-xs font-bold transition-colors" style="background:#1d4ed8" onmouseover="this.style.background=\'#1e40af\'" onmouseout="this.style.background=\'#1d4ed8\'">🔒 Pay Now — ₹' + total.toLocaleString() + '</button>' :
         status === 'paid' ?
           '<div class="mt-2 w-full py-2 rounded-xl text-center text-xs font-semibold" style="background:#f0fdf4;color:#166534">✅ Payment Complete</div>' :
           '<div class="mt-2 w-full py-2 rounded-xl text-center text-xs font-semibold" style="background:#f8fafc;color:#94a3b8">⏳ Not Yet Due</div>'
@@ -258,7 +258,7 @@ function showFeesSummary() {
         '<tbody>' + rows + '</tbody>' +
         '<tfoot><tr class="border-t-2 border-gray-200 bg-gray-50">' +
           '<td colspan="3" class="px-4 py-3 text-sm font-black text-gray-800">Grand Total (Day Scholar)</td>' +
-          '<td class="px-4 py-3 text-right text-base font-black" style="color:#8b1a1a">₹' + (totalPaid + totalDue + totalUpcoming).toLocaleString() + '</td>' +
+          '<td class="px-4 py-3 text-right text-base font-black" style="color:#1d4ed8">₹' + (totalPaid + totalDue + totalUpcoming).toLocaleString() + '</td>' +
           '<td></td>' +
         '</tr></tfoot>' +
       '</table>' +
@@ -274,15 +274,15 @@ function showPayModal(label, amount) {
       '<h2 class="text-xl font-black text-gray-800">Pay Fee</h2>' +
       '<button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>' +
     '</div>' +
-    '<div class="p-4 rounded-xl mb-2 text-center" style="background:#fdf3f3">' +
+    '<div class="p-4 rounded-xl mb-2 text-center" style="background:#eff6ff">' +
       '<div class="text-xs font-semibold text-gray-500 mb-1">' + label + '</div>' +
-      '<div class="text-3xl font-black" style="color:#8b1a1a">₹' + amount.toLocaleString() + '</div>' +
+      '<div class="text-3xl font-black" style="color:#1d4ed8">₹' + amount.toLocaleString() + '</div>' +
       '<div class="text-xs text-gray-400 mt-1">Day Scholar · Excl. hostel</div>' +
     '</div>' +
     '<div class="flex items-center justify-center gap-2 mb-4">' +
       '<label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" id="pay-hostel" onchange="updatePayTotal(' + amount + ')"> <span>Add Hostel Fee (₹24,000)</span></label>' +
     '</div>' +
-    '<div id="pay-total-display" class="text-center font-bold text-lg mb-4" style="color:#8b1a1a">Total: ₹' + amount.toLocaleString() + '</div>' +
+    '<div id="pay-total-display" class="text-center font-bold text-lg mb-4" style="color:#1d4ed8">Total: ₹' + amount.toLocaleString() + '</div>' +
     '<div class="space-y-3 mb-5">' +
       '<input type="text" placeholder="Student ID (e.g. AU2023001)" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary-400"/>' +
       '<input type="text" placeholder="Full Name" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary-400"/>' +
@@ -294,7 +294,7 @@ function showPayModal(label, amount) {
         '<option>📄 DD / Challan</option>' +
       '</select>' +
     '</div>' +
-    '<button onclick="simulatePayment()" class="w-full py-3 rounded-xl text-white font-bold text-sm" style="background:#8b1a1a" onmouseover="this.style.background=\'#6b1010\'" onmouseout="this.style.background=\'#8b1a1a\'">🔒 Proceed to Secure Payment</button>' +
+    '<button onclick="simulatePayment()" class="w-full py-3 rounded-xl text-white font-bold text-sm" style="background:#1d4ed8" onmouseover="this.style.background=\'#1e40af\'" onmouseout="this.style.background=\'#1d4ed8\'">🔒 Proceed to Secure Payment</button>' +
     '<p class="text-center text-xs text-gray-400 mt-3">Secured by 256-bit SSL encryption · NPCI Payment Gateway</p>' +
   '</div>');
 }
@@ -315,6 +315,6 @@ function simulatePayment() {
       '<p class="text-xs text-gray-400 mb-1">Date: ' + new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}) + '</p>' +
       '<p class="text-xs text-gray-400 mb-6">Receipt sent to your registered email & mobile.</p>' +
       '<div class="p-3 rounded-xl text-xs mb-5" style="background:#f0fdf4;color:#166534">Fee payment recorded successfully for Spring 2026 semester.</div>' +
-      '<button onclick="closeModal()" class="px-8 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#8b1a1a">Close</button>' +
+      '<button onclick="closeModal()" class="px-8 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#1d4ed8">Close</button>' +
     '</div>';
 }

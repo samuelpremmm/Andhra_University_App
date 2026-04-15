@@ -3,9 +3,9 @@
 // ============================================================
 
 const ROLES = {
-  student: { label:'Student', nav:['dashboard','students','faculty','classes','fees','exams','events','placements','certificates','departments','map','library','hostel','alumni','analytics'], color:'#1d4ed8' },
+  student: { label:'Student', nav:['dashboard','students','exams','fees','events','classes','certificates','map','faculty'], color:'#1d4ed8' },
   faculty: { label:'Faculty', nav:['dashboard','students','faculty','classes','exams','events','departments','map','library','analytics'], color:'#166534' },
-  admin:   { label:'Admin',   nav:['dashboard','students','faculty','classes','fees','exams','events','placements','certificates','departments','map','analytics','library','hostel','alumni'], color:'#8b1a1a' },
+  admin:   { label:'Admin',   nav:['dashboard','students','faculty','classes','fees','exams','events','placements','certificates','departments','map','analytics','library','hostel','alumni'], color:'#1d4ed8' },
   dean:    { label:'Dean',    nav:['dashboard','students','faculty','classes','fees','exams','events','placements','certificates','departments','map','analytics','library','hostel','alumni'], color:'#7c3aed' },
 };
 
@@ -137,8 +137,8 @@ function updateDate() {
 }
 
 // ---- Dept utilities ----
-function deptColor(code) { const d = AppData.departments.find(x => x.code === code); return d ? d.color : '#8b1a1a'; }
-function deptBg(code)    { const d = AppData.departments.find(x => x.code === code); return d ? d.bg    : '#fdf3f3'; }
+function deptColor(code) { const d = AppData.departments.find(x => x.code === code); return d ? d.color : '#1d4ed8'; }
+function deptBg(code)    { const d = AppData.departments.find(x => x.code === code); return d ? d.bg    : '#eff6ff'; }
 function deptName(code)  { const d = AppData.departments.find(x => x.code === code); return d ? d.name  : code; }
 function gpaColor(gpa) {
   if (gpa >= 3.7) return 'text-green-700';
@@ -147,7 +147,7 @@ function gpaColor(gpa) {
   return 'text-red-700';
 }
 function statusBadge(status) {
-  const styles = { 'Active':'background:#dcfce7;color:#166534','Probation':'background:#fef9c3;color:#a16207','Inactive':'background:#f1f5f9;color:#475569','Completed':'background:#f1f5f9;color:#6b7280','Upcoming':'background:#faeaea;color:#8b1a1a' };
+  const styles = { 'Active':'background:#dcfce7;color:#166534','Probation':'background:#fef9c3;color:#a16207','Inactive':'background:#f1f5f9;color:#475569','Completed':'background:#f1f5f9;color:#6b7280','Upcoming':'background:#dbeafe;color:#1e40af' };
   return `<span class="badge" style="${styles[status]||'background:#f1f5f9;color:#475569'}">${status}</span>`;
 }
 
@@ -169,7 +169,7 @@ function renderNotifications() {
   document.getElementById('notif-panel').innerHTML = `
     <div class="p-4 border-b border-gray-100 flex items-center justify-between">
       <h3 class="font-bold text-gray-800">Notifications <span class="text-xs text-gray-400 font-normal">(${unread} unread)</span></h3>
-      <span class="text-xs font-semibold cursor-pointer" style="color:#8b1a1a" onclick="markAllRead()">Mark all read</span>
+      <span class="text-xs font-semibold cursor-pointer" style="color:#1d4ed8" onclick="markAllRead()">Mark all read</span>
     </div>
     <div class="overflow-y-auto" style="max-height:380px">
       ${notifs.map(n => `
@@ -179,7 +179,7 @@ function renderNotifications() {
             <div class="flex-1 min-w-0">
               <div class="text-sm font-semibold text-gray-800 flex items-center gap-2">
                 ${n.title}
-                ${!n.read ? `<span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#8b1a1a"></span>` : ''}
+                ${!n.read ? `<span class="w-2 h-2 rounded-full flex-shrink-0" style="background:#1d4ed8"></span>` : ''}
               </div>
               <div class="text-xs text-gray-500 mt-0.5 leading-relaxed">${n.msg}</div>
               <div class="text-xs text-gray-400 mt-1">${n.time}</div>
@@ -207,7 +207,7 @@ function markAllRead() {
 const ROLE_LETTER = { student:'S', faculty:'F', admin:'A', dean:'D' };
 
 // Built-in demo credentials (role → password)
-const DEMO_CREDS = { admin:'admin123', dean:'dean123', faculty:'faculty123', student:'student123' };
+const DEMO_CREDS = { faculty:'faculty123', student:'student123' };
 
 // --- LocalStorage user store ---
 function getUsers()          { return JSON.parse(localStorage.getItem('au_users') || '{}'); }
@@ -217,35 +217,83 @@ function saveRemembered(d)   { localStorage.setItem('au_remember', JSON.stringif
 function clearRemembered()   { localStorage.removeItem('au_remember'); }
 
 
+// ---- CAPTCHA ----
+var _captchaCode = '';
+function generateCaptcha() {
+  _captchaCode = String(Math.floor(10000 + Math.random() * 90000));
+  const el = document.getElementById('captcha-text');
+  if (el) el.textContent = _captchaCode;
+}
+function refreshCaptcha() { generateCaptcha(); }
+
+// ---- EMS Role Switcher ----
+const EMS_ROLE_LABELS = { student:'Student Login', faculty:'Faculty Login', admin:'Admin Login', dean:'Dean Login' };
+const EMS_BANNER_LABELS = { student:'Student Portal Login', faculty:'Faculty Portal Login', admin:'Admin Portal Login', dean:'Dean Portal Login' };
+
+function switchEmsRole(role) {
+  document.getElementById('login-role').value = role;
+  document.getElementById('ems-form-title').textContent = EMS_ROLE_LABELS[role] || 'Login';
+  document.getElementById('ems-banner-text').textContent = EMS_BANNER_LABELS[role] || 'Portal Login';
+  // Update tab styles
+  ['student','faculty'].forEach(r => {
+    const btn = document.getElementById('ems-tab-' + r);
+    if (btn) {
+      btn.style.background = r === role ? '#1976d2' : 'transparent';
+      btn.style.color = r === role ? 'white' : '#64748b';
+    }
+  });
+  // Update signup hidden role field
+  const sr = document.getElementById('signup-role');
+  if (sr) sr.value = role;
+}
+
+function showEmsSignup() {
+  document.getElementById('signin-form').classList.add('hidden');
+  document.getElementById('signup-form').classList.remove('hidden');
+  const role = document.getElementById('login-role').value || 'student';
+  document.getElementById('signup-role').value = role;
+  document.getElementById('ems-form-title').textContent = 'Create Account';
+}
+function hideEmsSignup() {
+  document.getElementById('signup-form').classList.add('hidden');
+  document.getElementById('signin-form').classList.remove('hidden');
+  const role = document.getElementById('login-role').value || 'student';
+  document.getElementById('ems-form-title').textContent = EMS_ROLE_LABELS[role] || 'Login';
+}
+
 // ---- Show / Hide ----
 function showLogin() {
   const overlay = document.getElementById('login-overlay');
   overlay.classList.remove('hidden');
   // Re-trigger card animation
   const card = overlay.querySelector('.login-card');
-  card.classList.remove('shake');
-  void card.offsetWidth;
-  // Restore to credentials step / signin tab
+  if (card) { card.classList.remove('shake'); void card.offsetWidth; }
+  // Restore to credentials step
   document.getElementById('login-step-1').classList.remove('hidden');
   document.getElementById('login-step-3').classList.add('hidden');
   document.getElementById('forgot-panel').classList.add('hidden');
-  document.getElementById('login-tabs').classList.remove('hidden');
-  switchLoginTab('signin');
+  document.getElementById('signin-form').classList.remove('hidden');
+  document.getElementById('signup-form').classList.add('hidden');
+  // Generate CAPTCHA
+  generateCaptcha();
+  document.getElementById('captcha-input').value = '';
   // Pre-fill remembered credentials
   const rem = getRemembered();
   if (rem) {
-    document.getElementById('login-role').value = rem.role || '';
+    document.getElementById('login-role').value = rem.role || 'student';
     document.getElementById('login-id').value   = rem.id   || '';
     document.getElementById('remember-me').checked = true;
+    switchEmsRole(rem.role || 'student');
+  } else {
+    switchEmsRole('student');
   }
+  document.getElementById('login-error').textContent = '';
 }
 
-// ---- Tabs ----
+// ---- Legacy tab fn (kept for compatibility) ----
 function switchLoginTab(tab) {
   document.getElementById('signin-form').classList.toggle('hidden', tab !== 'signin');
   document.getElementById('signup-form').classList.toggle('hidden', tab !== 'signup');
-  document.getElementById('tab-signin').classList.toggle('active', tab === 'signin');
-  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
   document.getElementById('login-error').textContent  = '';
   document.getElementById('signup-error').textContent = '';
 }
@@ -286,6 +334,7 @@ document.addEventListener('input', function(e) {
 // ---- Shake helper ----
 function shakeCard() {
   const card = document.querySelector('.login-card');
+  if (!card) return;
   card.classList.remove('shake');
   void card.offsetWidth;
   card.classList.add('shake');
@@ -301,7 +350,10 @@ function doLogin() {
   const err  = document.getElementById('login-error');
   err.textContent = '';
 
+  const captchaVal = (document.getElementById('captcha-input').value || '').trim();
   if (!role || !id || !pass) { err.textContent = 'Please fill in all fields.'; shakeCard(); return; }
+  if (!captchaVal) { err.textContent = 'Please enter the security code.'; shakeCard(); return; }
+  if (captchaVal !== _captchaCode) { err.textContent = 'Incorrect security code. Please try again.'; generateCaptcha(); document.getElementById('captcha-input').value=''; shakeCard(); return; }
 
   // Check custom users first, then demo creds
   const users = getUsers();
@@ -375,7 +427,6 @@ function doSignUp() {
 
 function completeLogin(role, userId, name) {
   document.getElementById('login-step-1').classList.add('hidden');
-  document.getElementById('login-tabs').classList.add('hidden');
   document.getElementById('login-step-3').classList.remove('hidden');
   document.getElementById('login-success-msg').textContent = `Signing you in as ${name} (${ROLES[role]?.label})…`;
   sessionStorage.setItem('au_role', role);
@@ -452,7 +503,7 @@ function updateUserInfo() {
   const hAvt  = document.getElementById('header-avatar');
 
   if (el)    el.textContent    = user.name;
-  if (badge) { badge.textContent = ROLES[role]?.label || 'Admin'; badge.style.color = ROLES[role]?.color || '#8b1a1a'; }
+  if (badge) { badge.textContent = ROLES[role]?.label || 'Admin'; badge.style.color = ROLES[role]?.color || '#1d4ed8'; }
   if (sAvt)  sAvt.textContent  = letter;
   if (hAvt)  hAvt.textContent  = letter;
 }
@@ -466,5 +517,5 @@ window.addEventListener('load', () => {
   updateUserInfo();
   if (!window.location.hash) window.location.hash = '#dashboard';
   renderCurrentPage();
-  if (!sessionStorage.getItem('au_role')) showLogin();
+  if (!sessionStorage.getItem('au_role')) { showLogin(); }
 });

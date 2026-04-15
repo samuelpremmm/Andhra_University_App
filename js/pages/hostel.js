@@ -35,8 +35,8 @@ function renderHostel() {
         ${h.blocks.map(b => {
           const pct = Math.round((b.occupied / b.capacity) * 100);
           const vacant = b.capacity - b.occupied;
-          const typeColor = b.type === 'Girls' ? '#9d174d' : b.type === 'PG' ? '#1d4ed8' : '#8b1a1a';
-          const typeBg    = b.type === 'Girls' ? '#fdf2f8' : b.type === 'PG' ? '#eff6ff' : '#fdf3f3';
+          const typeColor = b.type === 'Girls' ? '#9d174d' : b.type === 'PG' ? '#1d4ed8' : '#1d4ed8';
+          const typeBg    = b.type === 'Girls' ? '#fdf2f8' : b.type === 'PG' ? '#eff6ff' : '#eff6ff';
           return `
           <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
             <div class="flex items-start justify-between mb-3">
@@ -106,7 +106,7 @@ function renderHostel() {
               <option>Double Sharing — ₹48,000/yr</option>
               <option>Triple Sharing — ₹38,000/yr</option>
             </select>
-            <button onclick="submitHostelApp()" class="w-full py-2.5 rounded-xl text-white font-bold text-sm" style="background:#8b1a1a" onmouseover="this.style.background='#6b1010'" onmouseout="this.style.background='#8b1a1a'">
+            <button onclick="submitHostelApp()" class="w-full py-2.5 rounded-xl text-white font-bold text-sm" style="background:#1d4ed8" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1d4ed8'">
               Submit Application
             </button>
           </div>
@@ -124,7 +124,7 @@ function submitHostelApp() {
       <h2 class="text-lg font-black text-gray-800 mb-2">Application Submitted!</h2>
       <p class="text-sm text-gray-500 mb-1">Ref: HSTL${Date.now().toString().slice(-6)}</p>
       <p class="text-xs text-gray-400 mb-5">You will be allotted a room within 3 working days. Check your AU email for confirmation.</p>
-      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#8b1a1a">Close</button>
+      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#1d4ed8">Close</button>
     </div>
   `);
 }

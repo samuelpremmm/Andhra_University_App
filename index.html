@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 
   <!-- PWA / theme -->
-  <meta name="theme-color" content="#8b1a1a">
+  <meta name="theme-color" content="#1d4ed8">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="AU Portal">
 
@@ -28,7 +28,7 @@
 
   <!-- Windows / Edge tiles -->
   <meta name="msapplication-TileImage" content="icons/icon-144.png">
-  <meta name="msapplication-TileColor" content="#8b1a1a">
+  <meta name="msapplication-TileColor" content="#1d4ed8">
   <meta name="msapplication-config" content="none">
 
   <!-- SEO / sharing -->
@@ -45,32 +45,32 @@
       theme: {
         extend: {
           colors: {
-            /* AU Maroon — from the crimson border/serpent ring of the emblem */
+            /* AU Blue */
             primary: {
-              50:  '#fdf3f3',
-              100: '#fbe5e5',
-              200: '#f5bfbf',
-              300: '#ec8888',
-              400: '#dc4545',
-              500: '#b81c1c',
-              600: '#8b1a1a',
-              700: '#6b1010',
-              800: '#4a0b0b',
-              900: '#330808',
-              950: '#200505'
+              50:  '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#172554',
+              950: '#0f172a'
             },
-            /* AU Gold — from the sunflower petal ring of the emblem */
+            /* AU Sky — accent */
             gold: {
-              50:  '#fefce8',
-              100: '#fef9c3',
-              200: '#fef08a',
-              300: '#fde047',
-              400: '#facc15',
-              500: '#eab308',
-              600: '#ca8a04',
-              700: '#a16207',
-              800: '#854d0e',
-              900: '#713f12',
+              50:  '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
             }
           }
         }
@@ -78,79 +78,79 @@
     }
   </script>
 </head>
-<body class="bg-amber-50/40 font-sans" style="background-color:#fdf6ee">
+<body class="bg-blue-50/40 font-sans" style="background-color:#eff6ff">
 
   <!-- ══ APP SPLASH SCREEN (shown while loading) ══ -->
   <div id="app-splash" style="
     position:fixed;inset:0;z-index:9999;
-    background:linear-gradient(135deg,#200505 0%,#3d0808 50%,#200505 100%);
+    background:linear-gradient(135deg,#0f172a 0%,#172554 50%,#0f172a 100%);
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     transition:opacity 0.5s ease;
   ">
     <div style="animation:splashLogoIn 0.7s cubic-bezier(0.175,0.885,0.32,1.275) both">
-      <div style="width:108px;height:108px;border-radius:24px;background:linear-gradient(135deg,#1a0303,#3d0808);border:2.5px solid #ca8a04;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 40px rgba(202,138,4,0.3);margin:0 auto 24px">
+      <div style="width:108px;height:108px;border-radius:24px;background:linear-gradient(135deg,#0c1a3a,#172554);border:2.5px solid #0ea5e9;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 40px rgba(14,165,233,0.3);margin:0 auto 24px">
         <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
           <defs>
-            <linearGradient id="splashBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a0303"/><stop offset="100%" stop-color="#3d0808"/></linearGradient>
-            <linearGradient id="splashGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#eab308"/><stop offset="100%" stop-color="#ca8a04"/></linearGradient>
+            <linearGradient id="splashBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0c1a3a"/><stop offset="100%" stop-color="#172554"/></linearGradient>
+            <linearGradient id="splashGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient>
           </defs>
           <rect width="512" height="512" rx="96" fill="url(#splashBg)"/>
           <polygon points="256,36 468,152 468,384 256,500 44,384 44,152" fill="none" stroke="url(#splashGold)" stroke-width="10" opacity="0.65"/>
           <rect x="88" y="296" width="336" height="168" rx="18" fill="url(#splashGold)"/>
-          <rect x="98" y="308" width="152" height="144" rx="12" fill="#fef9c3"/>
-          <rect x="262" y="308" width="152" height="144" rx="12" fill="#fde68a"/>
+          <rect x="98" y="308" width="152" height="144" rx="12" fill="#e0f2fe"/>
+          <rect x="262" y="308" width="152" height="144" rx="12" fill="#bae6fd"/>
           <rect x="246" y="308" width="20" height="144" fill="url(#splashGold)"/>
           <polygon points="256,100 420,184 256,268 92,184" fill="url(#splashGold)"/>
           <rect x="400" y="184" width="18" height="82" rx="9" fill="url(#splashGold)"/>
-          <circle cx="409" cy="278" r="22" fill="#eab308"/>
-          <text x="256" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="900" fill="#1a0303" letter-spacing="-1">AU</text>
+          <circle cx="409" cy="278" r="22" fill="#38bdf8"/>
+          <text x="256" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="900" fill="#0c1a3a" letter-spacing="-1">AU</text>
         </svg>
       </div>
       <div style="text-align:center">
-        <div style="font-size:26px;font-weight:900;color:#fef9c3;letter-spacing:0.5px">Andhra University</div>
-        <div style="font-size:13px;font-weight:600;color:#ca8a04;margin-top:4px;letter-spacing:1px">SMART CAMPUS PORTAL</div>
+        <div style="font-size:26px;font-weight:900;color:#e0f2fe;letter-spacing:0.5px">Andhra University</div>
+        <div style="font-size:13px;font-weight:600;color:#0ea5e9;margin-top:4px;letter-spacing:1px">SMART CAMPUS PORTAL</div>
       </div>
     </div>
     <!-- Loading bar -->
     <div style="margin-top:48px;width:180px;height:3px;background:rgba(255,255,255,0.1);border-radius:999px;overflow:hidden">
-      <div id="splash-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#8b1a1a,#ca8a04,#eab308);border-radius:999px;animation:splashBar 1.8s ease forwards"></div>
+      <div id="splash-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#1d4ed8,#0ea5e9,#38bdf8);border-radius:999px;animation:splashBar 1.8s ease forwards"></div>
     </div>
-    <p style="margin-top:14px;font-size:11px;color:rgba(253,230,138,0.5);letter-spacing:1.5px">LOADING…</p>
+    <p style="margin-top:14px;font-size:11px;color:rgba(186,230,253,0.5);letter-spacing:1.5px">LOADING…</p>
   </div>
 
   <!-- ══ INSTALL BANNER ══ -->
   <div id="install-banner" style="
     display:none;position:fixed;bottom:0;left:0;right:0;z-index:8888;
     padding:12px 16px;
-    background:linear-gradient(135deg,#200505,#3d0808);
-    border-top:2px solid #ca8a04;
+    background:linear-gradient(135deg,#0f172a,#172554);
+    border-top:2px solid #0ea5e9;
     box-shadow:0 -4px 24px rgba(0,0,0,0.4);
     animation:bannerSlideUp 0.4s ease;
   ">
     <div style="max-width:520px;margin:0 auto;display:flex;align-items:center;gap:14px;">
-      <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#1a0303,#3d0808);border:1.5px solid #ca8a04;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#0c1a3a,#172554);border:1.5px solid #0ea5e9;display:flex;align-items:center;justify-content:center;flex-shrink:0">
         <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
-          <rect width="512" height="512" rx="96" fill="#1a0303"/>
-          <polygon points="256,36 468,152 468,384 256,500 44,384 44,152" fill="none" stroke="#ca8a04" stroke-width="10" opacity="0.65"/>
-          <polygon points="256,100 420,184 256,268 92,184" fill="#ca8a04"/>
-          <rect x="88" y="296" width="336" height="168" rx="18" fill="#ca8a04"/>
-          <rect x="98" y="308" width="152" height="144" rx="12" fill="#fef9c3"/>
-          <rect x="262" y="308" width="152" height="144" rx="12" fill="#fde68a"/>
-          <rect x="246" y="308" width="20" height="144" fill="#ca8a04"/>
-          <text x="256" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="900" fill="#1a0303" letter-spacing="-1">AU</text>
+          <rect width="512" height="512" rx="96" fill="#0c1a3a"/>
+          <polygon points="256,36 468,152 468,384 256,500 44,384 44,152" fill="none" stroke="#0ea5e9" stroke-width="10" opacity="0.65"/>
+          <polygon points="256,100 420,184 256,268 92,184" fill="#0ea5e9"/>
+          <rect x="88" y="296" width="336" height="168" rx="18" fill="#0ea5e9"/>
+          <rect x="98" y="308" width="152" height="144" rx="12" fill="#e0f2fe"/>
+          <rect x="262" y="308" width="152" height="144" rx="12" fill="#bae6fd"/>
+          <rect x="246" y="308" width="20" height="144" fill="#0ea5e9"/>
+          <text x="256" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="900" fill="#0c1a3a" letter-spacing="-1">AU</text>
         </svg>
       </div>
       <div style="flex:1;min-width:0">
-        <div style="font-weight:800;font-size:14px;color:#fef9c3">Install AU Portal</div>
-        <div style="font-size:12px;color:#ca8a04;margin-top:1px">Add to home screen for instant access — works offline</div>
+        <div style="font-weight:800;font-size:14px;color:#e0f2fe">Install AU Portal</div>
+        <div style="font-size:12px;color:#0ea5e9;margin-top:1px">Add to home screen for instant access — works offline</div>
       </div>
       <button id="install-btn" onclick="triggerInstall()" style="
-        background:linear-gradient(135deg,#ca8a04,#eab308);color:#1a0303;
+        background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#0c1a3a;
         border:none;border-radius:10px;padding:9px 18px;
         font-weight:800;font-size:13px;cursor:pointer;flex-shrink:0;
-        box-shadow:0 2px 10px rgba(202,138,4,0.4);
+        box-shadow:0 2px 10px rgba(14,165,233,0.4);
       ">Install</button>
-      <button onclick="dismissBanner()" style="background:none;border:none;color:rgba(253,230,138,0.5);cursor:pointer;font-size:20px;line-height:1;flex-shrink:0;padding:4px">×</button>
+      <button onclick="dismissBanner()" style="background:none;border:none;color:rgba(186,230,253,0.5);cursor:pointer;font-size:20px;line-height:1;flex-shrink:0;padding:4px">×</button>
     </div>
   </div>
 
@@ -158,14 +158,14 @@
   <div id="ios-banner" style="
     display:none;position:fixed;bottom:0;left:0;right:0;z-index:8888;
     padding:14px 16px 24px;
-    background:linear-gradient(135deg,#200505,#3d0808);
-    border-top:2px solid #ca8a04;
+    background:linear-gradient(135deg,#0f172a,#172554);
+    border-top:2px solid #0ea5e9;
     text-align:center;
     animation:bannerSlideUp 0.4s ease;
   ">
-    <button onclick="dismissBanner()" style="position:absolute;top:10px;right:16px;background:none;border:none;color:rgba(253,230,138,0.5);cursor:pointer;font-size:22px">×</button>
-    <p style="color:#fef9c3;font-weight:800;font-size:14px;margin:0 0 6px">Install AU Portal on iPhone / iPad</p>
-    <p style="color:#ca8a04;font-size:12px;margin:0">Tap <strong style="color:#fde68a">Share</strong> <span style="font-size:16px">⬆</span> then <strong style="color:#fde68a">"Add to Home Screen"</strong> <span style="font-size:14px">➕</span></p>
+    <button onclick="dismissBanner()" style="position:absolute;top:10px;right:16px;background:none;border:none;color:rgba(186,230,253,0.5);cursor:pointer;font-size:22px">×</button>
+    <p style="color:#e0f2fe;font-weight:800;font-size:14px;margin:0 0 6px">Install AU Portal on iPhone / iPad</p>
+    <p style="color:#0ea5e9;font-size:12px;margin:0">Tap <strong style="color:#bae6fd">Share</strong> <span style="font-size:16px">⬆</span> then <strong style="color:#bae6fd">"Add to Home Screen"</strong> <span style="font-size:14px">➕</span></p>
   </div>
 
   <style>
@@ -177,108 +177,89 @@
   <div class="flex h-screen overflow-hidden">
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 text-white flex flex-col flex-shrink-0 transition-all duration-300" style="background: linear-gradient(180deg, #200505 0%, #330808 40%, #200505 100%);">
-      <!-- AU Gold top bar -->
-      <div style="height:3px;background:linear-gradient(90deg,#8b1a1a,#ca8a04,#eab308,#ca8a04,#8b1a1a)"></div>
+    <aside id="sidebar" class="w-64 text-white flex flex-col flex-shrink-0 transition-all duration-300" style="background:linear-gradient(180deg,#0c1a3a 0%,#0f2557 50%,#0c1a3a 100%);box-shadow:4px 0 20px rgba(0,0,0,0.25)">
+      <!-- AU Blue top bar -->
+      <div style="height:3px;background:linear-gradient(90deg,transparent,#0ea5e9,#38bdf8,#0ea5e9,transparent)"></div>
 
       <!-- Logo -->
-      <div class="px-5 py-5 border-b" style="border-color:#4a0b0b">
+      <div class="px-4 py-4 border-b" style="border-color:rgba(14,165,233,0.2)">
         <div class="flex items-center gap-3">
-          <!-- AU Smart Campus Logo -->
-          <div class="flex-shrink-0 flex items-center justify-center shadow-xl rounded-xl" style="width:56px;height:56px;border:2px solid #ca8a04;background:linear-gradient(135deg,#1a0303,#3d0808);padding:0;overflow:hidden;">
-            <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
-              <!-- Hexagon background -->
-              <polygon points="28,4 50,16 50,40 28,52 6,40 6,16" fill="none" stroke="#ca8a04" stroke-width="1.5" opacity="0.6"/>
-              <!-- Inner hex -->
-              <polygon points="28,10 44,19 44,37 28,46 12,37 12,19" fill="rgba(202,138,4,0.08)"/>
-              <!-- Book base -->
-              <rect x="14" y="28" width="28" height="16" rx="2" fill="#ca8a04" opacity="0.9"/>
-              <!-- Book pages -->
-              <rect x="15" y="29" width="12.5" height="14" rx="1.5" fill="#fef9c3"/>
-              <rect x="28.5" y="29" width="12.5" height="14" rx="1.5" fill="#fde68a"/>
-              <!-- Book spine -->
-              <rect x="27.2" y="29" width="1.6" height="14" fill="#ca8a04"/>
-              <!-- Page lines left -->
-              <line x1="17" y1="33" x2="25.5" y2="33" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="17" y1="36" x2="25.5" y2="36" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="17" y1="39" x2="25.5" y2="39" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <!-- Page lines right -->
-              <line x1="30.5" y1="33" x2="39" y2="33" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="30.5" y1="36" x2="39" y2="36" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="30.5" y1="39" x2="39" y2="39" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <!-- Graduation cap -->
-              <polygon points="28,12 40,18 28,24 16,18" fill="#ca8a04"/>
-              <rect x="36" y="18" width="2" height="8" fill="#ca8a04"/>
-              <circle cx="37" cy="27" r="2.5" fill="#eab308"/>
-              <!-- AU monogram -->
-              <text x="28" y="23" text-anchor="middle" font-family="Georgia,serif" font-size="6.5" font-weight="900" fill="#1a0303" letter-spacing="-0.5">AU</text>
+          <div class="flex-shrink-0 flex items-center justify-center rounded-xl shadow-lg" style="width:52px;height:52px;border:1.5px solid rgba(14,165,233,0.6);background:rgba(14,165,233,0.08)">
+            <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+              <polygon points="28,4 50,16 50,40 28,52 6,40 6,16" fill="none" stroke="#0ea5e9" stroke-width="1.5" opacity="0.7"/>
+              <rect x="14" y="28" width="28" height="16" rx="2" fill="#0ea5e9" opacity="0.85"/>
+              <rect x="15" y="29" width="12.5" height="14" rx="1.5" fill="#e0f2fe"/>
+              <rect x="28.5" y="29" width="12.5" height="14" rx="1.5" fill="#bae6fd"/>
+              <rect x="27.2" y="29" width="1.6" height="14" fill="#0ea5e9"/>
+              <polygon points="28,12 40,18 28,24 16,18" fill="#0ea5e9"/>
+              <rect x="36" y="18" width="2" height="8" fill="#0ea5e9"/>
+              <circle cx="37" cy="27" r="2.5" fill="#38bdf8"/>
+              <text x="28" y="23" text-anchor="middle" font-family="Georgia,serif" font-size="6.5" font-weight="900" fill="#0c1a3a">AU</text>
             </svg>
           </div>
           <div>
-            <div class="font-black text-base leading-tight" style="color:#fef9c3">Andhra</div>
-            <div class="font-bold text-sm leading-tight" style="color:#fef9c3">University</div>
-            <div class="text-xs font-medium mt-0.5" style="color:#ca8a04">Student Portal</div>
+            <div class="font-black text-sm leading-tight" style="color:#e0f2fe;letter-spacing:0.3px">ANDHRA</div>
+            <div class="font-black text-sm leading-tight" style="color:#e0f2fe;letter-spacing:0.3px">UNIVERSITY</div>
+            <div class="text-xs font-semibold mt-0.5" style="color:#0ea5e9;letter-spacing:0.5px">AU EMS PORTAL</div>
           </div>
         </div>
       </div>
 
-      <!-- Semester Badge -->
-      <div class="px-5 py-3 border-b" style="border-color:#4a0b0b">
-        <span class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-full" style="background:rgba(202,138,4,0.12);color:#fde047;border:1px solid rgba(202,138,4,0.25)">
-          <span class="w-1.5 h-1.5 bg-green-400 rounded-full inline-block animate-pulse"></span>
-          Spring 2026 · Est. 1926
-        </span>
+      <!-- Status -->
+      <div class="px-4 py-2.5 border-b" style="border-color:rgba(14,165,233,0.15)">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 bg-green-400 rounded-full flex-shrink-0" style="box-shadow:0 0 6px #4ade80"></span>
+          <span class="text-xs font-medium" style="color:rgba(186,230,253,0.7)">Spring 2026 · Est. 1926</span>
+        </div>
       </div>
 
       <!-- Navigation -->
-      <nav class="flex-1 py-4 px-3 overflow-y-auto space-y-0.5" id="nav-menu">
+      <nav class="flex-1 py-3 px-2.5 overflow-y-auto space-y-0.5" id="nav-menu">
         <!-- rendered by JS -->
       </nav>
 
       <!-- User Info -->
-      <div class="px-4 py-4 border-t" style="border-color:#4a0b0b">
-        <div class="flex items-center gap-3">
-          <div id="sidebar-avatar" class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shadow flex-shrink-0" style="background:linear-gradient(135deg,#8b1a1a,#6b1010);border:1.5px solid #ca8a04;color:#fef9c3">A</div>
+      <div class="px-3 py-3 border-t" style="border-color:rgba(14,165,233,0.2)">
+        <div class="flex items-center gap-2.5 p-2 rounded-xl" style="background:rgba(255,255,255,0.05)">
+          <div id="sidebar-avatar" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black shadow flex-shrink-0" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#0c1a3a">A</div>
           <div class="flex-1 min-w-0">
-            <div id="user-name" class="text-sm font-semibold truncate" style="color:#fef9c3">Admin User</div>
-            <div id="user-role-badge" class="text-xs font-bold truncate" style="color:#ca8a04">Admin</div>
+            <div id="user-name" class="text-xs font-bold truncate" style="color:#e0f2fe">Admin User</div>
+            <div id="user-role-badge" class="text-xs truncate" style="color:#0ea5e9;font-size:0.65rem">Admin</div>
           </div>
-          <button onclick="doLogout()" title="Logout" class="text-xs px-2 py-1 rounded-lg" style="color:#ca8a04;background:rgba(202,138,4,0.1)" onmouseover="this.style.background='rgba(202,138,4,0.25)'" onmouseout="this.style.background='rgba(202,138,4,0.1)'">↩</button>
+          <button onclick="doLogout()" title="Logout" class="text-xs p-1.5 rounded-lg transition-colors" style="color:#0ea5e9" onmouseover="this.style.background='rgba(14,165,233,0.2)'" onmouseout="this.style.background='transparent'">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </button>
         </div>
       </div>
-      <!-- AU bottom gold bar -->
-      <div style="height:2px;background:linear-gradient(90deg,transparent,#ca8a04,transparent)"></div>
+      <div style="height:2px;background:linear-gradient(90deg,transparent,#0ea5e9,transparent)"></div>
     </aside>
 
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col overflow-hidden">
 
-      <!-- AU Gold accent bar under header -->
-      <div style="height:3px;background:linear-gradient(90deg,#8b1a1a,#ca8a04,#eab308,#ca8a04,#8b1a1a)"></div>
-
       <!-- Top Header -->
-      <header class="bg-white border-b px-6 py-4 flex items-center justify-between flex-shrink-0 shadow-sm" style="border-color:#f5bfbf">
-        <div class="flex items-center gap-4">
-          <button onclick="toggleSidebar()" class="text-gray-400 transition-colors p-1 rounded-lg" onmouseover="this.style.color='#8b1a1a';this.style.background='#fdf3f3'" onmouseout="this.style.color='';this.style.background=''">
+      <header class="bg-white border-b flex items-center justify-between flex-shrink-0" style="border-color:#e2e8f0;box-shadow:0 1px 8px rgba(0,0,0,0.06)">
+        <!-- Left accent strip -->
+        <div style="width:4px;height:100%;background:linear-gradient(180deg,#1d4ed8,#0ea5e9);flex-shrink:0;min-height:60px"></div>
+        <div class="flex items-center gap-4 flex-1 px-5 py-3.5">
+          <button onclick="toggleSidebar()" class="p-2 rounded-lg transition-colors text-gray-400" onmouseover="this.style.background='#eff6ff';this.style.color='#1d4ed8'" onmouseout="this.style.background='';this.style.color=''">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
           <div>
-            <h1 id="page-title" class="text-lg font-bold text-gray-800 leading-tight">Dashboard</h1>
-            <p id="page-subtitle" class="text-xs text-gray-400">Andhra University · Spring 2026</p>
+            <h1 id="page-title" class="text-base font-black text-gray-800 leading-tight">Dashboard</h1>
+            <p id="page-subtitle" class="text-xs text-gray-400 mt-0.5">Andhra University · Spring 2026</p>
           </div>
         </div>
-        <div class="flex items-center gap-3">
-          <div id="current-date" class="text-sm text-gray-500 hidden sm:block"></div>
-          <!-- Notification Bell -->
+        <div class="flex items-center gap-2 px-5">
+          <div id="current-date" class="text-xs text-gray-400 hidden sm:block mr-1"></div>
           <div class="relative">
-            <button onclick="toggleNotifications()" class="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+            <button onclick="toggleNotifications()" class="relative p-2 rounded-lg transition-colors text-gray-400" onmouseover="this.style.background='#f1f5f9';this.style.color='#374151'" onmouseout="this.style.background='';this.style.color=''">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-              <span id="notif-count" class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#8b1a1a;display:none">0</span>
+              <span id="notif-count" class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:#1d4ed8;display:none">0</span>
             </button>
-            <!-- Notification Panel -->
             <div id="notif-panel" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50" style="top:100%"></div>
           </div>
-          <div id="header-avatar" class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center text-white text-xs font-bold shadow">A</div>
+          <div id="header-avatar" class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-black shadow" style="background:linear-gradient(135deg,#1d4ed8,#0ea5e9)">A</div>
         </div>
       </header>
 
@@ -300,135 +281,147 @@
     </div>
   </div>
 
-  <!-- Login Overlay -->
-  <div id="login-overlay" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:linear-gradient(135deg,rgba(32,5,5,0.97),rgba(60,10,10,0.95))">
-    <div class="login-card bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden" style="max-height:95vh;overflow-y:auto">
+  <!-- ══ LOGIN PAGE (AU EMS Style) ══ -->
+  <div id="login-overlay" class="hidden fixed inset-0 z-50 overflow-y-auto" style="background:#eff6ff">
 
-      <!-- Header -->
-      <div class="p-6 text-white text-center relative" style="background:linear-gradient(135deg,#200505 0%,#8b1a1a 60%,#200505 100%)">
-        <!-- Decorative circles -->
-        <div style="position:absolute;top:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(202,138,4,0.1)"></div>
-        <div style="position:absolute;bottom:-30px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(202,138,4,0.08)"></div>
+    <!-- Role Banner -->
+    <div id="ems-role-banner" style="background:#1976d2;padding:10px 28px;display:flex;align-items:center;gap:6px;border-top:1px solid rgba(255,255,255,0.2)">
+      <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24" style="opacity:0.85"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+      <span id="ems-banner-text" style="color:white;font-weight:700;font-size:14px">Student Portal Login</span>
+    </div>
 
-        <!-- Logo -->
-        <div class="flex justify-center mb-3 login-logo-wrap">
-          <div class="login-logo-inner w-18 h-18 rounded-2xl flex items-center justify-center shadow-xl" style="width:72px;height:72px;background:linear-gradient(135deg,#1a0303,#3d0808);border:2px solid #ca8a04">
-            <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="68" height="68">
-              <polygon points="28,4 50,16 50,40 28,52 6,40 6,16" fill="none" stroke="#ca8a04" stroke-width="1.5" opacity="0.6"/>
-              <polygon points="28,10 44,19 44,37 28,46 12,37 12,19" fill="rgba(202,138,4,0.08)"/>
-              <rect x="14" y="28" width="28" height="16" rx="2" fill="#ca8a04" opacity="0.9"/>
-              <rect x="15" y="29" width="12.5" height="14" rx="1.5" fill="#fef9c3"/>
-              <rect x="28.5" y="29" width="12.5" height="14" rx="1.5" fill="#fde68a"/>
-              <rect x="27.2" y="29" width="1.6" height="14" fill="#ca8a04"/>
-              <line x1="17" y1="33" x2="25.5" y2="33" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="17" y1="36" x2="25.5" y2="36" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="17" y1="39" x2="25.5" y2="39" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="30.5" y1="33" x2="39" y2="33" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="30.5" y1="36" x2="39" y2="36" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <line x1="30.5" y1="39" x2="39" y2="39" stroke="#8b1a1a" stroke-width="1" opacity="0.5"/>
-              <polygon points="28,12 40,18 28,24 16,18" fill="#ca8a04"/>
-              <rect x="36" y="18" width="2" height="8" fill="#ca8a04"/>
-              <circle cx="37" cy="27" r="2.5" fill="#eab308"/>
-              <text x="28" y="23" text-anchor="middle" font-family="Georgia,serif" font-size="6.5" font-weight="900" fill="#1a0303" letter-spacing="-0.5">AU</text>
-            </svg>
-          </div>
+    <!-- Form Area -->
+    <div style="min-height:calc(100vh - 138px);display:flex;align-items:center;justify-content:center;padding:40px 16px;background:radial-gradient(ellipse at 20% 50%,rgba(147,197,253,0.35) 0%,transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(147,197,253,0.35) 0%,transparent 60%),url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22><rect width=%22400%22 height=%22300%22 fill=%22%23eff6ff%22/></svg>')">
+
+      <div class="login-card" style="background:rgba(255,255,255,0.94);border-radius:8px;padding:36px 40px;width:100%;max-width:460px;box-shadow:0 8px 40px rgba(0,0,0,0.14);backdrop-filter:blur(4px)">
+
+        <!-- Role tabs -->
+        <div style="display:flex;gap:4px;margin-bottom:22px;background:#f1f5f9;border-radius:8px;padding:4px">
+          <button onclick="switchEmsRole('student')" id="ems-tab-student" class="ems-role-tab active" style="flex:1;padding:7px 4px;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:#1976d2;color:white">🎓 Student</button>
+          <button onclick="switchEmsRole('faculty')" id="ems-tab-faculty" class="ems-role-tab" style="flex:1;padding:7px 4px;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:transparent;color:#64748b">👩‍🏫 Faculty</button>
         </div>
-        <h2 class="text-xl font-black" style="color:#fef9c3">Andhra University Portal</h2>
-        <p class="text-xs mt-1 font-medium" style="color:#ca8a04">Smart Campus App · Est. 1926</p>
 
-      </div>
+        <!-- Title -->
+        <h2 id="ems-form-title" style="text-align:center;color:#1565c0;font-size:22px;font-weight:800;margin-bottom:22px;letter-spacing:0.3px">Student Login</h2>
 
-      <!-- Tabs (Sign In / Sign Up) -->
-      <div id="login-tabs" class="flex border-b border-gray-100">
-        <button class="login-tab-btn active" id="tab-signin" onclick="switchLoginTab('signin')">Sign In</button>
-        <button class="login-tab-btn" id="tab-signup" onclick="switchLoginTab('signup')">Sign Up</button>
-      </div>
+        <!-- ── SIGN IN step ── -->
+        <div id="login-step-1">
+          <div id="signin-form">
+            <input type="hidden" id="login-role" value="student"/>
 
-      <!-- ── STEP 1: Credentials ── -->
-      <div id="login-step-1" class="p-6 space-y-4">
-
-        <!-- SIGN IN form -->
-        <div id="signin-form">
-          <div class="space-y-3">
-            <select id="login-role" class="login-input font-semibold" style="appearance:auto">
-              <option value="">Select Your Role</option>
-              <option value="student">🎓 Student</option>
-              <option value="faculty">👩‍🏫 Faculty</option>
-              <option value="admin">⚙️ Admin</option>
-              <option value="dean">🏛️ Dean</option>
-            </select>
-            <input id="login-id" type="text" placeholder="User ID / Email" class="login-input" onkeydown="if(event.key==='Enter')doLogin()"/>
-            <div class="relative">
-              <input id="login-pass" type="password" placeholder="Password" class="login-input" style="padding-right:44px" onkeydown="if(event.key==='Enter')doLogin()"/>
-              <button type="button" onclick="togglePwd('login-pass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;font-size:18px" title="Show/hide">👁</button>
+            <!-- Register Number -->
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:5px">Register Number</label>
+              <input id="login-id" type="text" placeholder="Enter Register Number"
+                class="ems-input" style="border-left:4px solid #1976d2"
+                onkeydown="if(event.key==='Enter')doLogin()"/>
             </div>
+
+            <!-- Password -->
+            <div style="margin-bottom:14px">
+              <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:5px">Password</label>
+              <div style="position:relative">
+                <input id="login-pass" type="password" placeholder="Enter Password"
+                  class="ems-input" style="padding-right:44px"
+                  onkeydown="if(event.key==='Enter')doLogin()"/>
+                <button type="button" onclick="togglePwd('login-pass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;font-size:18px">👁</button>
+              </div>
+            </div>
+
+            <!-- Security Code -->
+            <div style="margin-bottom:16px">
+              <label style="display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:5px">Security Code <span style="color:#ef4444">*</span></label>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div id="captcha-display" onclick="refreshCaptcha()" title="Click to refresh"
+                  style="min-width:120px;height:44px;border:1.5px solid #cbd5e1;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;letter-spacing:8px;font-size:20px;font-weight:900;font-family:Georgia,serif;color:#1e3a5f;background:linear-gradient(135deg,#dce8f8,#eef3fa);position:relative;overflow:hidden;text-shadow:1px 1px 0 rgba(0,0,0,0.2)">
+                  <span id="captcha-text" style="position:relative;z-index:1;transform:skew(-6deg) rotate(-2deg)"></span>
+                  <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(30,58,138,0.05) 3px,rgba(30,58,138,0.05) 4px)"></div>
+                </div>
+                <input id="captcha-input" type="text" placeholder="Enter Security Code" maxlength="6"
+                  class="ems-input" style="flex:1"
+                  onkeydown="if(event.key==='Enter')doLogin()"/>
+              </div>
+              <div style="font-size:10px;color:#94a3b8;margin-top:4px">Click the code to refresh</div>
+            </div>
+
+            <p id="login-error" style="font-size:12px;color:#ef4444;font-weight:600;min-height:16px;margin-bottom:10px"></p>
+            <button onclick="doLogin()" id="signin-btn" class="ems-login-btn">Login</button>
+
+            <!-- Forgot Password -->
+            <div style="text-align:center;margin-top:14px">
+              <button onclick="showForgotPassword()" style="font-size:13px;font-weight:600;color:#1976d2;background:none;border:none;cursor:pointer">Forgot Password?</button>
+            </div>
+
+            <div style="text-align:center;margin-top:8px">
+              <span style="font-size:11px;color:#94a3b8">New user? </span>
+              <button onclick="showEmsSignup()" style="font-size:12px;color:#1976d2;font-weight:700;background:none;border:none;cursor:pointer;text-decoration:underline">Create Account</button>
+            </div>
+
+            <p style="text-align:center;font-size:10px;color:#cbd5e1;margin-top:10px">
+              Demo: student123 · faculty123
+            </p>
+
+            <!-- hidden remember-me for JS compatibility -->
+            <input type="checkbox" id="remember-me" style="display:none"/>
           </div>
-          <div class="flex justify-between items-center mt-2 mb-1">
-            <label class="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
-              <input type="checkbox" id="remember-me" style="accent-color:#8b1a1a"> Remember me
-            </label>
-            <button onclick="showForgotPassword()" class="text-xs font-semibold" style="color:#8b1a1a;background:none;border:none;cursor:pointer">Forgot Password?</button>
+
+          <!-- SIGN UP form (hidden initially) -->
+          <div id="signup-form" class="hidden" style="space-y:12px">
+            <div style="margin-bottom:12px">
+              <button onclick="hideEmsSignup()" style="color:#1976d2;font-weight:700;font-size:13px;background:none;border:none;cursor:pointer">← Back to Login</button>
+            </div>
+            <input id="signup-role" type="hidden" value="student"/>
+            <input id="signup-name" type="text" placeholder="Full Name" class="ems-input" style="margin-bottom:10px"/>
+            <input id="signup-uid" type="text" placeholder="University ID (e.g. S001)" class="ems-input" style="margin-bottom:10px"/>
+            <input id="signup-email" type="email" placeholder="University Email" class="ems-input" style="margin-bottom:10px"/>
+            <div style="position:relative;margin-bottom:10px">
+              <input id="signup-pass" type="password" placeholder="Create Password (min 8 chars)" class="ems-input" style="padding-right:44px"/>
+              <button type="button" onclick="togglePwd('signup-pass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;font-size:18px">👁</button>
+            </div>
+            <input id="signup-pass2" type="password" placeholder="Confirm Password" class="ems-input" style="margin-bottom:10px"/>
+            <div style="margin-bottom:12px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:#94a3b8">Password strength</span><span id="pwd-strength-label" style="font-weight:700"></span></div>
+              <div class="progress-bar"><div id="pwd-strength-bar" class="progress-fill" style="width:0%;background:#e5e7eb;transition:width 0.3s,background 0.3s"></div></div>
+            </div>
+            <p id="signup-error" style="font-size:12px;color:#ef4444;font-weight:600;min-height:16px"></p>
+            <button onclick="doSignUp()" id="signup-btn" class="ems-login-btn">Create Account →</button>
           </div>
-          <p id="login-error" class="text-xs text-red-500 font-medium min-h-4 mb-2"></p>
-          <button onclick="doLogin()" class="login-btn" id="signin-btn">Sign In →</button>
-          <p class="text-xs text-center text-gray-400 mt-3">Demo: <span class="font-semibold text-gray-500">student123 · faculty123 · admin123</span></p>
         </div>
 
-        <!-- SIGN UP form -->
-        <div id="signup-form" class="hidden space-y-3">
-          <select id="signup-role" class="login-input font-semibold" style="appearance:auto">
-            <option value="">Select Your Role</option>
-            <option value="student">🎓 Student</option>
-            <option value="faculty">👩‍🏫 Faculty</option>
-          </select>
-          <input id="signup-name" type="text" placeholder="Full Name" class="login-input"/>
-          <input id="signup-uid" type="text" placeholder="University ID (e.g. AU2024001)" class="login-input"/>
-          <input id="signup-email" type="email" placeholder="University Email (@andhrauniv.ac.in)" class="login-input"/>
-          <div class="relative">
-            <input id="signup-pass" type="password" placeholder="Create Password (min 8 chars)" class="login-input" style="padding-right:44px"/>
-            <button type="button" onclick="togglePwd('signup-pass',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#9ca3af;font-size:18px" title="Show/hide">👁</button>
-          </div>
-          <input id="signup-pass2" type="password" placeholder="Confirm Password" class="login-input"/>
-          <!-- Password strength bar -->
-          <div>
-            <div class="flex justify-between text-xs mb-1"><span class="text-gray-400">Password strength</span><span id="pwd-strength-label" class="font-semibold"></span></div>
-            <div class="progress-bar"><div id="pwd-strength-bar" class="progress-fill" style="width:0%;background:#e5e7eb;transition:width 0.3s,background 0.3s"></div></div>
-          </div>
-          <p id="signup-error" class="text-xs text-red-500 font-medium min-h-4"></p>
-          <button onclick="doSignUp()" class="login-btn" id="signup-btn">Create Account →</button>
+        <!-- ── Success ── -->
+        <div id="login-step-3" class="hidden" style="text-align:center;padding:20px 0 10px">
+          <div class="login-success-icon" style="font-size:52px;margin-bottom:12px">✅</div>
+          <h3 style="font-weight:900;color:#1565c0;font-size:20px;margin-bottom:6px">Welcome!</h3>
+          <p id="login-success-msg" style="font-size:13px;color:#64748b;margin-bottom:16px"></p>
+          <div style="width:32px;height:32px;border:4px solid #1976d2;border-top-color:transparent;border-radius:50%;animation:loginSpinner 0.7s linear infinite;margin:0 auto"></div>
         </div>
+
+        <!-- ── FORGOT PASSWORD panel ── -->
+        <div id="forgot-panel" class="hidden">
+          <button onclick="hideForgotPassword()" style="font-size:13px;font-weight:700;color:#1976d2;background:none;border:none;cursor:pointer;margin-bottom:16px">← Back to Login</button>
+          <div style="text-align:center;margin-bottom:18px">
+            <div style="font-size:36px;margin-bottom:8px">🔑</div>
+            <h3 style="font-weight:900;color:#1f2937;font-size:18px">Reset Password</h3>
+            <p style="font-size:13px;color:#64748b;margin-top:4px">Enter your registered email and set a new password</p>
+          </div>
+          <div id="forgot-step-1">
+            <input id="forgot-email" type="email" placeholder="your.id@andhrauniv.ac.in" class="ems-input" style="margin-bottom:10px"/>
+            <input id="new-pass" type="password" placeholder="New Password (min 8 chars)" class="ems-input" style="margin-bottom:10px"/>
+            <input id="new-pass2" type="password" placeholder="Confirm New Password" class="ems-input" style="margin-bottom:12px"/>
+            <p id="forgot-error" style="font-size:12px;color:#ef4444;font-weight:600;min-height:16px;margin-bottom:8px"></p>
+            <button onclick="doResetPassword()" class="ems-login-btn">Reset Password →</button>
+          </div>
+          <div id="forgot-step-3" class="hidden" style="text-align:center">
+            <div style="font-size:42px;margin-bottom:12px">🎉</div>
+            <p style="font-weight:800;color:#1f2937;margin-bottom:16px">Password Reset Successful!</p>
+            <button onclick="hideForgotPassword()" class="ems-login-btn">Back to Login →</button>
+          </div>
+        </div>
+
+        <!-- Tabs (hidden, kept for JS compatibility) -->
+        <div id="login-tabs" class="hidden"></div>
+
       </div>
-
-      <!-- ── Success ── -->
-      <div id="login-step-3" class="hidden p-8 text-center space-y-4">
-        <div class="login-success-icon text-6xl">✅</div>
-        <h3 class="font-black text-gray-800 text-xl">Welcome!</h3>
-        <p id="login-success-msg" class="text-sm text-gray-500"></p>
-        <div class="w-8 h-8 border-4 border-t-transparent rounded-full animate-spin mx-auto" style="border-color:#8b1a1a;border-top-color:transparent"></div>
-      </div>
-
-      <!-- ── FORGOT PASSWORD panel ── -->
-      <div id="forgot-panel" class="hidden p-6 space-y-4">
-        <button onclick="hideForgotPassword()" class="text-sm font-semibold flex items-center gap-1" style="color:#8b1a1a;background:none;border:none;cursor:pointer">← Back to Sign In</button>
-        <div class="text-center">
-          <div class="text-4xl mb-2">🔑</div>
-          <h3 class="font-black text-gray-800">Reset Password</h3>
-          <p class="text-sm text-gray-500 mt-1">Enter your registered email and set a new password</p>
-        </div>
-        <div id="forgot-step-1" class="space-y-3">
-          <input id="forgot-email" type="email" placeholder="your.id@andhrauniv.ac.in" class="login-input"/>
-          <input id="new-pass" type="password" placeholder="New Password (min 8 chars)" class="login-input"/>
-          <input id="new-pass2" type="password" placeholder="Confirm New Password" class="login-input"/>
-          <p id="forgot-error" class="text-xs text-red-500 font-medium min-h-4"></p>
-          <button onclick="doResetPassword()" class="login-btn">Reset Password →</button>
-        </div>
-        <div id="forgot-step-3" class="hidden text-center space-y-3">
-          <div class="text-5xl">🎉</div>
-          <p class="font-bold text-gray-800">Password Reset Successful!</p>
-          <button onclick="hideForgotPassword()" class="login-btn">Back to Sign In →</button>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -535,16 +528,16 @@
     #chatbot-widget { position:fixed; bottom:24px; right:24px; z-index:9999; font-family:inherit; }
     #chat-toggle-btn {
       width:56px; height:56px; border-radius:50%; border:none; cursor:pointer;
-      background:linear-gradient(135deg,#8b1a1a,#6b1010);
+      background:linear-gradient(135deg,#1d4ed8,#1e40af);
       color:#fff; display:flex; align-items:center; justify-content:center;
-      box-shadow:0 4px 20px rgba(139,26,26,0.45);
+      box-shadow:0 4px 20px rgba(29,78,216,0.45);
       transition:transform 0.2s, box-shadow 0.2s;
     }
-    #chat-toggle-btn:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(139,26,26,0.55); }
+    #chat-toggle-btn:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(29,78,216,0.55); }
     /* Pulse ring */
     #chat-toggle-btn::before {
       content:''; position:absolute; width:56px; height:56px; border-radius:50%;
-      border:2px solid rgba(139,26,26,0.4); animation:chat-pulse 2s infinite;
+      border:2px solid rgba(29,78,216,0.4); animation:chat-pulse 2s infinite;
     }
     @keyframes chat-pulse { 0%{transform:scale(1);opacity:1} 100%{transform:scale(1.6);opacity:0} }
 
@@ -554,31 +547,31 @@
       background:#fff; border-radius:20px;
       box-shadow:0 8px 40px rgba(0,0,0,0.18);
       display:none; flex-direction:column;
-      overflow:hidden; border:1px solid #f5bfbf;
+      overflow:hidden; border:1px solid #bfdbfe;
     }
     #chat-header {
       padding:14px 16px; display:flex; align-items:center; gap:10px;
-      background:linear-gradient(135deg,#200505,#8b1a1a); flex-shrink:0;
+      background:linear-gradient(135deg,#0f172a,#1d4ed8); flex-shrink:0;
     }
     #chat-messages {
       flex:1; overflow-y:auto; padding:14px 12px;
       display:flex; flex-direction:column; gap:10px;
-      background:#fdf6ee; min-height:200px; max-height:280px;
+      background:#eff6ff; min-height:200px; max-height:280px;
     }
     #chat-messages::-webkit-scrollbar { width:4px; }
     #chat-messages::-webkit-scrollbar-track { background:transparent; }
-    #chat-messages::-webkit-scrollbar-thumb { background:#f5bfbf; border-radius:4px; }
+    #chat-messages::-webkit-scrollbar-thumb { background:#bfdbfe; border-radius:4px; }
 
     .chat-msg-bot { display:flex; align-items:flex-end; gap:7px; }
     .chat-msg-user { display:flex; justify-content:flex-end; }
-    .chat-avatar { width:28px; height:28px; border-radius:50%; background:#8b1a1a; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+    .chat-avatar { width:28px; height:28px; border-radius:50%; background:#1d4ed8; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
     .chat-bubble-bot {
-      background:#fff; border:1px solid #f5bfbf; border-radius:16px 16px 16px 4px;
+      background:#fff; border:1px solid #bfdbfe; border-radius:16px 16px 16px 4px;
       padding:9px 12px; font-size:12.5px; color:#374151; line-height:1.55;
       max-width:260px; box-shadow:0 1px 4px rgba(0,0,0,0.06);
     }
     .chat-bubble-user {
-      background:linear-gradient(135deg,#8b1a1a,#6b1010); color:#fff;
+      background:linear-gradient(135deg,#1d4ed8,#1e40af); color:#fff;
       border-radius:16px 16px 4px 16px;
       padding:9px 12px; font-size:12.5px; line-height:1.55; max-width:240px;
     }
@@ -593,30 +586,30 @@
     .chat-typing-dots span:nth-child(3) { animation-delay:0.4s; }
     @keyframes chat-dot-bounce { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-7px)} }
 
-    #chat-quick { padding:8px 10px; background:#fff; border-top:1px solid #fde8e8; display:flex; gap:6px; flex-wrap:wrap; flex-shrink:0; }
+    #chat-quick { padding:8px 10px; background:#fff; border-top:1px solid #dbeafe; display:flex; gap:6px; flex-wrap:wrap; flex-shrink:0; }
     .chat-quick-btn {
-      font-size:10.5px; padding:4px 9px; border-radius:20px; border:1px solid #f5bfbf;
-      background:#fff; color:#8b1a1a; cursor:pointer; font-weight:600; white-space:nowrap;
+      font-size:10.5px; padding:4px 9px; border-radius:20px; border:1px solid #bfdbfe;
+      background:#fff; color:#1d4ed8; cursor:pointer; font-weight:600; white-space:nowrap;
       transition:background 0.15s;
     }
-    .chat-quick-btn:hover { background:#fdf3f3; }
+    .chat-quick-btn:hover { background:#eff6ff; }
 
     #chat-input-row {
       padding:10px 12px; display:flex; gap:8px; align-items:center;
-      background:#fff; border-top:1px solid #fde8e8; flex-shrink:0;
+      background:#fff; border-top:1px solid #dbeafe; flex-shrink:0;
     }
     #chat-input {
       flex:1; border:1px solid #e5e7eb; border-radius:20px; padding:8px 14px;
       font-size:12.5px; outline:none; background:#f9fafb;
       transition:border-color 0.15s;
     }
-    #chat-input:focus { border-color:#8b1a1a; background:#fff; }
+    #chat-input:focus { border-color:#1d4ed8; background:#fff; }
     #chat-send-btn {
       width:34px; height:34px; border-radius:50%; border:none; cursor:pointer;
-      background:#8b1a1a; color:#fff; display:flex; align-items:center; justify-content:center;
+      background:#1d4ed8; color:#fff; display:flex; align-items:center; justify-content:center;
       flex-shrink:0; transition:background 0.15s;
     }
-    #chat-send-btn:hover { background:#6b1010; }
+    #chat-send-btn:hover { background:#1e40af; }
 
     @media(max-width:400px){
       #chat-window { width:calc(100vw - 24px); right:0; }
@@ -628,15 +621,15 @@
     <div id="chat-window">
       <!-- Header -->
       <div id="chat-header">
-        <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);border:1.5px solid #ca8a04;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎓</div>
+        <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.15);border:1.5px solid #0ea5e9;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎓</div>
         <div style="flex:1;min-width:0">
-          <div style="font-weight:800;font-size:13px;color:#fef9c3">AU Bot</div>
-          <div style="font-size:10.5px;color:#ca8a04;display:flex;align-items:center;gap:4px">
+          <div style="font-weight:800;font-size:13px;color:#e0f2fe">AU Bot</div>
+          <div style="font-size:10.5px;color:#0ea5e9;display:flex;align-items:center;gap:4px">
             <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block"></span>
             Online · Andhra University Assistant
           </div>
         </div>
-        <button onclick="toggleChat()" style="background:rgba(255,255,255,0.12);border:none;color:#fef9c3;width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px">×</button>
+        <button onclick="toggleChat()" style="background:rgba(255,255,255,0.12);border:none;color:#e0f2fe;width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px">×</button>
       </div>
 
       <!-- Messages -->

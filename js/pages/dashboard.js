@@ -1,7 +1,71 @@
 // ============================================================
 // Dashboard Page
 // ============================================================
+
+// Get the student record for the currently logged-in student
+function getCurrentStudent() {
+  const user = getCurrentUser();
+  const uid  = (user.id || '').toLowerCase();
+  return AppData.students.find(s => s.id.toLowerCase() === uid)
+      || AppData.students.find(s => s.name.toLowerCase() === uid)
+      || AppData.students[0]; // fallback to first student for demo
+}
+
+// ---- Student EMS Dashboard ----
+function renderStudentDashboard() {
+  const user = getCurrentUser();
+  const s    = getCurrentStudent();
+
+  const actions = [
+    { label:'Student Details',       icon:'👤', color:'#1d4ed8', onclick:"navigate('students')" },
+    { label:'Exam Registration',     icon:'📝', color:'#166534', onclick:"navigate('exams')" },
+    { label:'Challan Generation',    icon:'🧾', color:'#0e7490', onclick:"navigate('fees')" },
+    { label:'Challan Payment',       icon:'💳', color:'#b45309', onclick:"navigate('fees')" },
+    { label:'Payment Status',        icon:'✅', color:'#1d4ed8', onclick:"navigate('fees')" },
+    { label:'Print Receipt',         icon:'🖨️', color:'#b91c1c', onclick:"navigate('fees')" },
+    { label:'Download Hall-Ticket',  icon:'🎫', color:'#0e7490', onclick:"navigate('exams')" },
+    { label:'Results',               icon:'📊', color:'#4d7c0f', onclick:"navigate('exams')" },
+    { label:'Download SEF Form',     icon:'📄', color:'#166534', onclick:"navigate('certificates')" },
+    { label:'Tuition Fees',          icon:'💰', color:'#ea580c', onclick:"navigate('fees')" },
+    { label:'Check Backlog Subjects',icon:'📋', color:'#1d4ed8', onclick:"navigate('exams')" },
+    { label:'Feedback for Faculty',  icon:'💬', color:'#b91c1c', onclick:"navigate('faculty')" },
+  ];
+
+  return `
+  <div class="p-6 max-w-4xl mx-auto space-y-5">
+
+    <!-- Welcome Banner -->
+    <div class="rounded-2xl p-5 text-white shadow-lg flex items-center justify-between" style="background:linear-gradient(135deg,#0f172a 0%,#1e40af 40%,#1d4ed8 70%,#1e3a8a 100%)">
+      <div>
+        <div class="text-xs font-semibold mb-1" style="color:#fde047">Andhra University · Spring 2026</div>
+        <div class="text-lg font-black">Welcome, ${s ? s.name : user.name}</div>
+        <div class="text-sm mt-0.5" style="color:#bae6fd">${s ? s.id : user.id.toUpperCase()} · ${s ? s.dept + ' Dept · Year ' + s.year : ''}</div>
+      </div>
+      <div class="text-right text-xs" style="color:#fde047">
+        <div class="text-2xl mb-1">🎓</div>
+        <div>AU EMS</div>
+      </div>
+    </div>
+
+    <!-- Action Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+      ${actions.map(a => `
+        <button onclick="${a.onclick}"
+          class="flex flex-col items-center justify-center gap-2 rounded-2xl p-5 text-white font-semibold text-sm shadow hover:opacity-90 active:scale-95 transition-all"
+          style="background:${a.color}; min-height:90px">
+          <span class="text-2xl">${a.icon}</span>
+          <span class="text-center leading-tight">${a.label}</span>
+        </button>
+      `).join('')}
+    </div>
+
+  </div>
+  `;
+}
+
 function renderDashboard() {
+  if (getCurrentRole() === 'student') return renderStudentDashboard();
+
   const d = AppData;
   const upcomingEvents = d.events.filter(e => e.status === 'Upcoming').slice(0, 4);
   const upcomingExams  = d.exams.filter(x => isUpcoming(x.date)).slice(0, 4);
@@ -18,7 +82,7 @@ function renderDashboard() {
   <div class="p-6 space-y-6">
 
     <!-- Welcome Banner -->
-    <div class="rounded-2xl p-6 text-white shadow-xl relative overflow-hidden" style="background:linear-gradient(135deg,#200505 0%,#6b1010 40%,#8b1a1a 70%,#4a0b0b 100%)">
+    <div class="rounded-2xl p-6 text-white shadow-xl relative overflow-hidden" style="background:linear-gradient(135deg,#0f172a 0%,#1e40af 40%,#1d4ed8 70%,#1e3a8a 100%)">
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-2xl font-bold mb-1">Welcome back, Admin!</h2>
@@ -92,7 +156,7 @@ function renderDashboard() {
               const typeClass = `badge-${e.type.toLowerCase()}`;
               return `
                 <div class="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer" onclick="navigate('events')">
-                  <div class="rounded-xl p-2.5 text-sm font-bold flex-shrink-0 text-center min-w-[50px]" style="background:#faeaea;color:#8b1a1a">
+                  <div class="rounded-xl p-2.5 text-sm font-bold flex-shrink-0 text-center min-w-[50px]" style="background:#dbeafe;color:#1d4ed8">
                     <div class="text-lg leading-none">${new Date(e.date).getDate()}</div>
                     <div class="text-xs">${new Date(e.date).toLocaleDateString('en-US',{month:'short'})}</div>
                   </div>

@@ -2,6 +2,13 @@
 // Students Page
 // ============================================================
 function renderStudents() {
+  // Students can only see their own profile
+  if (getCurrentRole() === 'student') {
+    const s = getCurrentStudent();
+    if (!s) return `<div class="p-8 text-center text-gray-400">Student record not found.</div>`;
+    return renderStudentDetail(s.id);
+  }
+
   const students = AppData.students;
   const depts = AppData.departments;
   const totalByYear = [1,2,3,4].map(y => students.filter(s => s.year === y).length);
@@ -118,23 +125,86 @@ function filterStudents() {
   document.getElementById('no-results-msg').classList.toggle('hidden', count > 0);
 }
 
-// ---- Student Detail ----
+// ---- Student Detail (EMS Style) ----
 function renderStudentDetail(id) {
   const s = AppData.students.find(x => x.id === id);
   if (!s) return `<div class="p-8 text-center text-gray-400">Student not found.</div>`;
 
   const dept = AppData.departments.find(d => d.code === s.dept);
-  const facultyAdvisor = AppData.faculty.find(f => f.name === s.advisor);
 
+  // EMS-style layout for student role
+  if (getCurrentRole() === 'student') {
+    const regNo = s.id.replace('S','322506402') || s.id;
+
+    // Random-but-consistent parent/personal details seeded by student id
+    const seed = parseInt(s.id.replace('S','')) || 1;
+    const fatherFirstNames = ['RAVI KUMAR','SURESH BABU','VENKATA RAO','KRISHNA MURTHY','SRINIVAS','RAMESH','NARAYANA','PRASAD','SEKHAR','ANJANEYULU','MURALI','SATISH','RAJESH','MOHAN RAO','SIVA PRASAD'];
+    const motherFirstNames = ['LAKSHMI','PADMAVATHI','SARASWATHI','VIJAYA LAKSHMI','SUDHA RANI','ANNAPURNA','SAVITHRI','KAMALA','VASANTHA','RATNA KUMARI','USHA RANI','MANGAMMA','SAROJA','NIRMALA','HYMAVATHI'];
+    const lastNames        = ['REDDY','RAO','NAIDU','SHARMA','VARMA','KUMAR','BABU','PRASAD','GOUD','RAJU','KIRAN','CHANDRA','SEKHAR','MURTHY','SWAMY'];
+    const religions        = ['Hindu','Hindu','Hindu','Hindu','Muslim','Christian','Hindu','Hindu','Hindu','Hindu','Buddhist','Hindu','Hindu','Hindu','Hindu'];
+    const moles1           = ['A MOLE ON THE LEFT HAND ARM','A MOLE ON THE RIGHT CHEEK','A MOLE ON THE LEFT SHOULDER','A MOLE ON THE NECK','A MOLE ON THE RIGHT HAND ARM','NO IDENTIFICATION MARK','A MOLE ON THE FOREHEAD','A MOLE ON THE LEFT WRIST'];
+    const moles2           = ['A MOLE ON THE LEFT LEG','A MOLE ON THE RIGHT LEG','NO IDENTIFICATION MARK','A MOLE ON THE BACK','A MOLE ON THE RIGHT KNEE','A MOLE ON THE LEFT KNEE','A MOLE ON THE CHIN','A MOLE ON THE RIGHT SHOULDER'];
+    const cities           = ['VISAKHAPATNAM','VIJAYAWADA','GUNTUR','TIRUPATI','KAKINADA','RAJAHMUNDRY','NELLORE','KURNOOL','ANANTAPUR','ELURU'];
+    const genders          = ['Male','Female','Male','Female','Male','Male','Female','Male','Female','Male','Male','Female','Female','Male','Female'];
+
+    const fi = (seed - 1) % fatherFirstNames.length;
+    const ln = (seed * 3) % lastNames.length;
+    const fatherName = fatherFirstNames[fi] + ' ' + lastNames[ln];
+    const motherName = motherFirstNames[(seed * 2) % motherFirstNames.length] + ' ' + lastNames[ln];
+    const city       = cities[(seed - 1) % cities.length];
+    const gender     = genders[(seed - 1) % genders.length];
+    const religion   = religions[(seed - 1) % religions.length];
+    const mole1      = moles1[(seed - 1) % moles1.length];
+    const mole2      = moles2[(seed * 2) % moles2.length];
+    const mobile     = '9' + String(4000000000 + seed * 123456789).slice(0,9);
+
+    const rows = [
+      { label: 'Registration Number', value: regNo },
+      { label: 'Name',                value: s.name.toUpperCase() },
+      { label: 'Father Name',         value: fatherName },
+      { label: 'Mother Name',         value: motherName },
+      { label: 'Course',              value: s.dept + ' — ' + (dept ? dept.name : s.dept) },
+      { label: 'College',             value: '064 — Andhra University College of Engineering' },
+      { label: 'Gender',              value: gender },
+      { label: 'Mole 1',              value: mole1 },
+      { label: 'Mole 2',              value: mole2 },
+      { label: 'Religion',            value: religion },
+      { label: 'Address',             value: city + '\n' + city + '\n' + city + '\nANDHRA PRADESH' },
+      { label: 'Mobile',              value: mobile },
+      { label: 'E-Mail',              value: s.email },
+    ];
+    return `
+    <div class="p-4 max-w-3xl mx-auto">
+      <!-- Header bar like AU EMS -->
+      <div style="background:#1976d2;color:white;padding:10px 16px;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-weight:700;font-size:14px">📋 Student Details for Registration Number ${regNo}</span>
+        <button onclick="navigate('dashboard')" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">✕ Close</button>
+      </div>
+      <div style="background:white;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse">
+          ${rows.map((r,i) => `
+            <tr style="background:${i%2===0?'#ffffff':'#f8fafc'}">
+              <td style="padding:10px 16px;font-size:13px;font-weight:600;color:#374151;width:38%;border-bottom:1px solid #e2e8f0;vertical-align:top">${r.label}</td>
+              <td style="padding:10px 16px;font-size:13px;color:#1f2937;border-bottom:1px solid #e2e8f0;white-space:pre-line">${r.value}</td>
+            </tr>
+          `).join('')}
+        </table>
+      </div>
+    </div>`;
+  }
+
+  // Admin/Faculty view — original detailed profile
+  const facultyAdvisor = AppData.faculty.find(f => f.name === s.advisor);
   const gpaPercent = Math.round((s.gpa / 4) * 100);
 
   return `
   <div class="p-6 max-w-4xl mx-auto space-y-5">
 
-    <!-- Back -->
+    <!-- Back (hidden for student role viewing own profile) -->
+    ${getCurrentRole() !== 'student' ? `
     <button onclick="navigate('students')" class="flex items-center gap-2 text-sm text-primary-600 hover:text-primary-800 font-medium mb-2">
       ← Back to Students
-    </button>
+    </button>` : ''}
 
     <!-- Profile Header -->
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">

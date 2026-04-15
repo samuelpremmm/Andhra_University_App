@@ -32,7 +32,7 @@ function renderPlacements() {
     <!-- Tabs -->
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
       <div class="border-b border-gray-100 px-5 flex gap-0">
-        <button onclick="switchPlacementTab('placements')" id="tab-placements" class="placement-tab active-tab px-5 py-3.5 text-sm font-semibold border-b-2 transition-colors" style="border-color:#8b1a1a;color:#8b1a1a">🏢 Placements</button>
+        <button onclick="switchPlacementTab('placements')" id="tab-placements" class="placement-tab active-tab px-5 py-3.5 text-sm font-semibold border-b-2 transition-colors" style="border-color:#1d4ed8;color:#1d4ed8">🏢 Placements</button>
         <button onclick="switchPlacementTab('internships')" id="tab-internships" class="placement-tab px-5 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-400 transition-colors">📋 Internships</button>
         <button onclick="switchPlacementTab('hackathons')" id="tab-hackathons" class="placement-tab px-5 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-400 transition-colors">💻 Hackathons</button>
       </div>
@@ -69,7 +69,7 @@ function renderPlacements() {
                 <tr class="data-row border-t border-gray-50" data-type="${p.type}">
                   <td class="px-5 py-3">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-black flex-shrink-0" style="background:#8b1a1a">${p.logo}</div>
+                      <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-black flex-shrink-0" style="background:#1d4ed8">${p.logo}</div>
                       <span class="font-semibold text-gray-800">${p.company}</span>
                     </div>
                   </td>
@@ -126,7 +126,7 @@ function renderPlacements() {
           <div class="border border-gray-100 rounded-xl p-4 hover:shadow-md transition-shadow">
             <div class="flex items-start justify-between mb-2">
               <h4 class="font-bold text-gray-800 text-sm">${h.name}</h4>
-              <span class="badge text-xs flex-shrink-0 ml-2" style="${h.status === 'Upcoming' ? 'background:#faeaea;color:#8b1a1a' : 'background:#f1f5f9;color:#64748b'}">${h.status}</span>
+              <span class="badge text-xs flex-shrink-0 ml-2" style="${h.status === 'Upcoming' ? 'background:#dbeafe;color:#1d4ed8' : 'background:#f1f5f9;color:#64748b'}">${h.status}</span>
             </div>
             <div class="space-y-1.5 text-xs text-gray-500 mb-3">
               <div>📅 ${formatDate(h.date)}</div>
@@ -136,7 +136,7 @@ function renderPlacements() {
               <div>📂 Department: ${h.dept}</div>
             </div>
             ${h.status === 'Upcoming'
-              ? `<button onclick="alert('Registered for ${h.name}! Check your email for confirmation.')" class="w-full text-xs font-semibold py-2 rounded-lg text-white transition-colors" style="background:#8b1a1a" onmouseover="this.style.background='#6b1010'" onmouseout="this.style.background='#8b1a1a'">Register Now</button>`
+              ? `<button onclick="alert('Registered for ${h.name}! Check your email for confirmation.')" class="w-full text-xs font-semibold py-2 rounded-lg text-white transition-colors" style="background:#1d4ed8" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1d4ed8'">Register Now</button>`
               : `<button disabled class="w-full text-xs font-semibold py-2 rounded-lg" style="background:#f1f5f9;color:#94a3b8">Event Completed</button>`}
           </div>`).join('')}
         </div>
@@ -160,7 +160,7 @@ function switchPlacementTab(tab) {
   });
   document.getElementById('panel-' + tab).classList.remove('hidden');
   const btn = document.getElementById('tab-' + tab);
-  btn.style.borderColor = '#8b1a1a'; btn.style.color = '#8b1a1a';
+  btn.style.borderColor = '#1d4ed8'; btn.style.color = '#1d4ed8';
 
   if (tab === 'hackathons') initPlacementChart();
 }
@@ -181,8 +181,8 @@ function initPlacementChart() {
     data: {
       labels: stats.map(s => s.year),
       datasets: [
-        { label:'Students Placed', data: stats.map(s => s.placed), backgroundColor:'#8b1a1a', borderRadius:6 },
-        { label:'Avg Package (LPA)', data: stats.map(s => s.avg_package), backgroundColor:'#ca8a04', borderRadius:6, yAxisID:'y1' },
+        { label:'Students Placed', data: stats.map(s => s.placed), backgroundColor:'#1d4ed8', borderRadius:6 },
+        { label:'Avg Package (LPA)', data: stats.map(s => s.avg_package), backgroundColor:'#0ea5e9', borderRadius:6, yAxisID:'y1' },
       ]
     },
     options: {

@@ -1,7 +1,119 @@
 // ============================================================
+// Exam Registration Form (student role)
+// ============================================================
+function renderExamRegistration() {
+  const s   = getCurrentStudent();
+  const reg = s ? s.id.replace('S','322506402') : '322506402001';
+  const dept = s ? AppData.departments.find(d => d.code === s.dept) : null;
+
+  return `
+  <div class="p-4 max-w-3xl mx-auto">
+    <!-- Header bar -->
+    <div style="background:#1976d2;color:white;padding:10px 16px;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-weight:700;font-size:14px">📝 Examination Registration for ${reg}</span>
+      <button onclick="navigate('dashboard')" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">✕ Close</button>
+    </div>
+
+    <div style="background:white;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;padding:24px">
+      <table style="width:100%;border-collapse:collapse">
+
+        <!-- Registration Number -->
+        <tr style="border-bottom:1px solid #e2e8f0">
+          <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#374151;width:38%;vertical-align:middle">Registration Number</td>
+          <td style="padding:12px 16px">
+            <input type="text" value="${reg}" readonly
+              style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 12px;font-size:13px;background:#f8fafc;color:#374151"/>
+          </td>
+        </tr>
+
+        <!-- Year / Semester -->
+        <tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0">
+          <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#374151;vertical-align:middle">Select appearing year/semester</td>
+          <td style="padding:12px 16px">
+            <select style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 12px;font-size:13px;background:white;color:#374151">
+              <option value="">-- Select --</option>
+              <option value="1-1">1-1</option>
+              <option value="1-2">1-2</option>
+              <option value="2-1">2-1</option>
+              <option value="2-2">2-2</option>
+              <option value="3-1">3-1</option>
+              <option value="3-2">3-2</option>
+              <option value="4-1">4-1</option>
+              <option value="4-2" ${s && s.year === 4 ? 'selected' : ''}>4-2</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- Years of Study -->
+        <tr style="border-bottom:1px solid #e2e8f0">
+          <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#374151;vertical-align:middle">Years of Study</td>
+          <td style="padding:12px 16px">
+            <select style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 12px;font-size:13px;background:white;color:#374151">
+              <option value="">-- Select --</option>
+              <option value="3">3 Years</option>
+              <option value="4">4 Years</option>
+              <option value="5" selected>5 Years</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- Registered Month-Year -->
+        <tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0">
+          <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#374151;vertical-align:middle">Registered month-year</td>
+          <td style="padding:12px 16px">
+            <select style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 12px;font-size:13px;background:white;color:#374151">
+              <option value="">Select</option>
+              <option value="nov-2022">November 2022</option>
+              <option value="apr-2023">April 2023</option>
+              <option value="nov-2023">November 2023</option>
+              <option value="apr-2024">April 2024</option>
+              <option value="nov-2024">November 2024</option>
+              <option value="apr-2025" selected>April 2025</option>
+              <option value="nov-2025">November 2025</option>
+              <option value="apr-2026">April 2026</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- Select Specialization -->
+        <tr style="border-bottom:1px solid #e2e8f0">
+          <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#374151;vertical-align:middle">Select Specialization</td>
+          <td style="padding:12px 16px">
+            <select style="width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 12px;font-size:13px;background:white;color:#374151">
+              <option value="">Choose</option>
+              ${AppData.departments.map(d =>
+                `<option value="${d.code}" ${s && s.dept === d.code ? 'selected' : ''}>${d.code} — ${d.name}</option>`
+              ).join('')}
+            </select>
+          </td>
+        </tr>
+
+      </table>
+
+      <!-- Submit -->
+      <div style="margin-top:20px;text-align:center">
+        <button onclick="submitExamRegistration()"
+          style="background:#1976d2;color:white;border:none;padding:11px 48px;border-radius:6px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(25,118,210,0.3)">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function submitExamRegistration() {
+  const btn = event.target;
+  btn.textContent = '✅ Submitted!';
+  btn.style.background = '#166534';
+  setTimeout(() => { btn.textContent = 'Submit'; btn.style.background = '#1976d2'; }, 3000);
+}
+
+// ============================================================
 // Exam Timings Page
 // ============================================================
 function renderExams() {
+  if (getCurrentRole() === 'student') return renderExamRegistration();
+
   const exams   = AppData.exams;
   const midterm = exams.filter(x => x.type === 'Mid-Term');
   const finals  = exams.filter(x => x.type === 'Final');

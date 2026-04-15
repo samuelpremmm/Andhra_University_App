@@ -49,7 +49,7 @@ function renderCertificates() {
           <option>Bank Loan</option>
           <option>Other</option>
         </select>
-        <button onclick="submitCertRequest()" class="py-2.5 px-4 rounded-lg text-white font-semibold text-sm transition-colors md:col-span-1" style="background:#8b1a1a" onmouseover="this.style.background='#6b1010'" onmouseout="this.style.background='#8b1a1a'">
+        <button onclick="submitCertRequest()" class="py-2.5 px-4 rounded-lg text-white font-semibold text-sm transition-colors md:col-span-1" style="background:#1d4ed8" onmouseover="this.style.background='#1e40af'" onmouseout="this.style.background='#1d4ed8'">
           Submit Request
         </button>
       </div>
@@ -83,7 +83,7 @@ function renderCertificates() {
             ${certs.map(c => {
               const statusStyle = {
                 'Issued':     'background:#dcfce7;color:#166534',
-                'Pending':    'background:#fef9c3;color:#a16207',
+                'Pending':    'background:#e0f2fe;color:#a16207',
                 'Processing': 'background:#dbeafe;color:#1d4ed8',
               }[c.status] || 'background:#f1f5f9;color:#475569';
               return `
@@ -124,7 +124,7 @@ function submitCertRequest() {
       <p class="text-sm text-gray-600 mb-1">Student ID: <strong>${sid}</strong></p>
       <p class="text-xs text-gray-400 mb-5">You will be notified via your registered email when ready.</p>
       <p class="text-xs font-mono font-bold text-gray-700 mb-5">Ref: CERT${Date.now().toString().slice(-6)}</p>
-      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#8b1a1a">Close</button>
+      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#1d4ed8">Close</button>
     </div>
   `);
 }
@@ -136,11 +136,11 @@ function downloadCert(id, name, type) {
         <h2 class="text-lg font-black text-gray-800">${type}</h2>
         <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>
       </div>
-      <div class="border-4 border-double p-6 rounded-xl text-center mb-5" style="border-color:#ca8a04;background:#fffef8">
-        <div class="text-xs font-semibold mb-2" style="color:#ca8a04">ANDHRA UNIVERSITY · VISAKHAPATNAM</div>
+      <div class="border-4 border-double p-6 rounded-xl text-center mb-5" style="border-color:#0ea5e9;background:#fffef8">
+        <div class="text-xs font-semibold mb-2" style="color:#0ea5e9">ANDHRA UNIVERSITY · VISAKHAPATNAM</div>
         <div class="text-xl font-black text-gray-800 mb-1">CERTIFICATE</div>
-        <div class="text-sm font-semibold mb-3" style="color:#8b1a1a">${type.toUpperCase()}</div>
-        <hr style="border-color:#ca8a04" class="mb-3"/>
+        <div class="text-sm font-semibold mb-3" style="color:#1d4ed8">${type.toUpperCase()}</div>
+        <hr style="border-color:#0ea5e9" class="mb-3"/>
         <p class="text-sm text-gray-700">This is to certify that <strong>${name}</strong> is a bonafide student of Andhra University, Visakhapatnam, enrolled in the current academic year 2025–2026.</p>
         <div class="mt-4 text-xs text-gray-400">Ref: ${id} · Issued: ${new Date().toLocaleDateString('en-IN')}</div>
       </div>
