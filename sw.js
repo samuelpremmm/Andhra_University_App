@@ -3,7 +3,7 @@
 // Works on both localhost and GitHub Pages subdirectory
 // ============================================================
 
-const CACHE_NAME = 'au-portal-v4';
+const CACHE_NAME = 'au-portal-v5';
 
 // Detect base path automatically (works for both localhost and GitHub Pages)
 const BASE = self.registration.scope;

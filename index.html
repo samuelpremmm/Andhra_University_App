@@ -255,13 +255,18 @@
       <header class="bg-white border-b flex items-center justify-between flex-shrink-0" style="border-color:#e2e8f0;box-shadow:0 1px 8px rgba(0,0,0,0.06)">
         <!-- Left accent strip -->
         <div style="width:4px;height:100%;background:linear-gradient(180deg,#1d4ed8,#0ea5e9);flex-shrink:0;min-height:60px"></div>
-        <div class="flex items-center gap-4 flex-1 px-5 py-3.5">
-          <button onclick="toggleSidebar()" class="p-2 rounded-lg transition-colors text-gray-400" onmouseover="this.style.background='#eff6ff';this.style.color='#1d4ed8'" onmouseout="this.style.background='';this.style.color=''">
+        <div class="flex items-center gap-3 flex-1 px-4 py-3.5">
+          <!-- Back button (mobile only) -->
+          <button onclick="goBack()" class="sm:hidden p-2 rounded-lg transition-colors text-gray-400 flex-shrink-0" style="display:none" id="mobile-back-btn" onmouseover="this.style.background='#eff6ff';this.style.color='#1d4ed8'" onmouseout="this.style.background='';this.style.color=''">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <!-- Hamburger -->
+          <button onclick="toggleSidebar()" class="p-2 rounded-lg transition-colors text-gray-400 flex-shrink-0" onmouseover="this.style.background='#eff6ff';this.style.color='#1d4ed8'" onmouseout="this.style.background='';this.style.color=''">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
-          <div>
-            <h1 id="page-title" class="text-base font-black text-gray-800 leading-tight">Dashboard</h1>
-            <p id="page-subtitle" class="text-xs text-gray-400 mt-0.5">Andhra University · Spring 2026</p>
+          <div class="min-w-0">
+            <h1 id="page-title" class="text-base font-black text-gray-800 leading-tight truncate">Dashboard</h1>
+            <p id="page-subtitle" class="text-xs text-gray-400 mt-0.5 truncate">Andhra University · Spring 2026</p>
           </div>
         </div>
         <div class="flex items-center gap-2 px-5">
@@ -278,7 +283,7 @@
       </header>
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-auto" id="content-area">
+      <main class="flex-1 overflow-auto" id="content-area" style="padding-bottom:0" id="content-area-wrap">
         <div class="flex items-center justify-center h-full">
           <div class="text-center">
             <div class="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
@@ -286,6 +291,9 @@
           </div>
         </div>
       </main>
+
+      <!-- Bottom Navigation (mobile only) -->
+      <nav id="bottom-nav" class="flex border-t bg-white" style="border-color:#e2e8f0;box-shadow:0 -2px 12px rgba(0,0,0,0.07);display:none;flex-shrink:0"></nav>
     </div>
   </div>
 
@@ -603,6 +611,59 @@
         panel.classList.add('hidden');
       }
     });
+
+    // ── Mobile UI setup ──────────────────────────────────
+    function isMobile() { return window.innerWidth < 768; }
+
+    // Show bottom nav + back btn on mobile
+    window.addEventListener('load', function() {
+      if (isMobile()) {
+        document.getElementById('bottom-nav').style.display = 'flex';
+        document.getElementById('mobile-back-btn').style.display = 'flex';
+      }
+    });
+    window.addEventListener('resize', function() {
+      const mobile = isMobile();
+      document.getElementById('bottom-nav').style.display = mobile ? 'flex' : 'none';
+      document.getElementById('mobile-back-btn').style.display = mobile ? 'flex' : 'none';
+      if (!mobile) document.getElementById('sidebar').classList.remove('collapsed');
+    });
+
+    // ── Sidebar overlay (tap outside to close on mobile) ──
+    const _sidebarOverlay = document.createElement('div');
+    _sidebarOverlay.id = 'sidebar-overlay';
+    _sidebarOverlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:39;';
+    _sidebarOverlay.onclick = function() {
+      document.getElementById('sidebar').classList.add('collapsed');
+      _sidebarOverlay.style.display = 'none';
+    };
+    document.body.appendChild(_sidebarOverlay);
+
+    // Patch toggleSidebar to show/hide overlay on mobile
+    const _origToggle = window.toggleSidebar;
+    window.toggleSidebar = function() {
+      const sb = document.getElementById('sidebar');
+      sb.classList.toggle('collapsed');
+      if (isMobile()) {
+        _sidebarOverlay.style.display = sb.classList.contains('collapsed') ? 'none' : 'block';
+      }
+    };
+
+    // Also hide overlay when sidebar closes via navigate()
+    const _origNavigate = window.navigate;
+    window.navigate = function(page, params) {
+      _origNavigate(page, params);
+      _sidebarOverlay.style.display = 'none';
+    };
+
+    // Rebuild bottom nav after login
+    const _origCompleteLogin = window.completeLogin;
+    if (_origCompleteLogin) {
+      window.completeLogin = function(...args) {
+        _origCompleteLogin(...args);
+        setTimeout(() => { if (window.buildBottomNav) buildBottomNav(); }, 1500);
+      };
+    }
   </script>
   <!-- ============================================================ -->
   <!-- AU Chatbot Widget                                            -->
