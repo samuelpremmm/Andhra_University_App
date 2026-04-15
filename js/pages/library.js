@@ -85,8 +85,8 @@ function renderLibrary() {
                 </td>
                 <td class="px-4 py-3 text-center">
                   ${b.available > 0
-                    ? `<button onclick="borrowBook('${b.id}','${b.title}')" class="text-xs font-semibold px-3 py-1 rounded-lg text-white" style="background:#8b1a1a">Borrow</button>`
-                    : `<button onclick="reserveBook('${b.id}','${b.title}')" class="text-xs font-semibold px-3 py-1 rounded-lg" style="background:#fef9c3;color:#a16207">Reserve</button>`}
+                    ? `<button onclick="borrowBook('${b.id}','${b.title}')" class="text-xs font-semibold px-3 py-1 rounded-lg text-white" style="background:#1d4ed8">Borrow</button>`
+                    : `<button onclick="reserveBook('${b.id}','${b.title}')" class="text-xs font-semibold px-3 py-1 rounded-lg" style="background:#e0f2fe;color:#a16207">Reserve</button>`}
                 </td>
               </tr>`).join('')}
             </tbody>
@@ -115,7 +115,7 @@ function renderLibrary() {
             <div>Fine: ₹2 per book per day</div>
           </div>
         </div>
-        <div class="p-4 rounded-xl" style="background:#fef9c3">
+        <div class="p-4 rounded-xl" style="background:#e0f2fe">
           <div class="font-bold text-amber-700 mb-2">ℹ️ Info</div>
           <div class="text-gray-600 space-y-1">
             <div>Carry valid AU ID card</div>
@@ -136,7 +136,7 @@ function borrowBook(id, title) {
       <h2 class="text-lg font-black text-gray-800 mb-2">Borrow Request</h2>
       <p class="text-sm text-gray-600 mb-4"><strong>${title}</strong></p>
       <input type="text" placeholder="Your Student ID" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm mb-3 focus:outline-none focus:border-primary-400"/>
-      <button onclick="confirmBorrow('${title}')" class="w-full py-2.5 rounded-xl text-white font-bold text-sm" style="background:#8b1a1a">Confirm Borrow</button>
+      <button onclick="confirmBorrow('${title}')" class="w-full py-2.5 rounded-xl text-white font-bold text-sm" style="background:#1d4ed8">Confirm Borrow</button>
     </div>
   `);
 }
@@ -160,7 +160,7 @@ function confirmBorrow(title, action) {
       <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl mx-auto mb-3" style="background:#dcfce7">✅</div>
       <h2 class="text-lg font-black text-gray-800 mb-1">${action}!</h2>
       <p class="text-sm text-gray-500 mb-4">"${title}" has been ${action.toLowerCase()}. Due in 14 days.</p>
-      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#8b1a1a">Done</button>
+      <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl text-white font-semibold text-sm" style="background:#1d4ed8">Done</button>
     </div>
   `;
 }

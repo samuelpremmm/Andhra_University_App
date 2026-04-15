@@ -37,8 +37,8 @@ function renderMap() {
             <button onclick="clearNavigation()" class="px-4 py-2.5 rounded-xl text-sm font-semibold border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors">Clear</button>
           </div>
         </div>
-        <div id="nav-info-box" class="hidden sm:min-w-48 p-3 rounded-xl text-sm" style="background:#fdf3f3">
-          <div class="font-bold" style="color:#8b1a1a" id="nav-dept-name">—</div>
+        <div id="nav-info-box" class="hidden sm:min-w-48 p-3 rounded-xl text-sm" style="background:#eff6ff">
+          <div class="font-bold" style="color:#1d4ed8" id="nav-dept-name">—</div>
           <div class="text-xs text-gray-500 mt-1 space-y-0.5">
             <div>🚶 Walking: <span id="nav-walk" class="font-semibold text-gray-700">—</span></div>
             <div>📏 Distance: <span id="nav-dist" class="font-semibold text-gray-700">—</span></div>
@@ -48,7 +48,7 @@ function renderMap() {
       </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
 
       <!-- Map -->
       <div class="lg:col-span-3 bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
@@ -84,7 +84,7 @@ function renderMap() {
             <rect x="516" y="262" width="8" height="248" fill="#cfd8dc" opacity="0.7"/>
 
             <!-- Navigation route (drawn dynamically) -->
-            <path id="nav-route" d="" fill="none" stroke="#8b1a1a" stroke-width="4"
+            <path id="nav-route" d="" fill="none" stroke="#1d4ed8" stroke-width="4"
               stroke-dasharray="10,6" stroke-linecap="round" opacity="0" style="transition:opacity 0.4s"/>
 
             <!-- Route arrows / dots along path -->
@@ -109,9 +109,9 @@ function renderMap() {
 
             <!-- Library (centre-top) -->
             <g style="cursor:default">
-              <rect x="273" y="25" width="104" height="70" rx="10" fill="#ca8a04" opacity="0.92"/>
+              <rect x="273" y="25" width="104" height="70" rx="10" fill="#0ea5e9" opacity="0.92"/>
               <text x="325" y="57"  text-anchor="middle" font-size="10" fill="white" font-weight="bold">📚 LIBRARY</text>
-              <text x="325" y="70"  text-anchor="middle" font-size="8"  fill="#fef9c3">85,420 books</text>
+              <text x="325" y="70"  text-anchor="middle" font-size="8"  fill="#e0f2fe">85,420 books</text>
             </g>
 
             <!-- MECH -->
@@ -134,16 +134,16 @@ function renderMap() {
             <g class="dept-block" onclick="navigateToDept('CIVIL')" style="cursor:pointer">
               <rect x="30" y="145" width="100" height="80" rx="10" fill="#92400e" opacity="0.88" id="block-CIVIL"/>
               <text x="80" y="180" text-anchor="middle" font-size="11" fill="white" font-weight="bold">🏛️ CIVIL</text>
-              <text x="80" y="194" text-anchor="middle" font-size="8"  fill="#fde68a">Civil Block</text>
-              <text x="80" y="206" text-anchor="middle" font-size="8"  fill="#fde68a">1,450 students</text>
+              <text x="80" y="194" text-anchor="middle" font-size="8"  fill="#bae6fd">Civil Block</text>
+              <text x="80" y="206" text-anchor="middle" font-size="8"  fill="#bae6fd">1,450 students</text>
             </g>
 
             <!-- Admin Block (centre) -->
             <g style="cursor:default">
-              <rect x="273" y="205" width="154" height="75" rx="10" fill="#8b1a1a" opacity="0.95"/>
+              <rect x="273" y="205" width="154" height="75" rx="10" fill="#1d4ed8" opacity="0.95"/>
               <text x="350" y="238" text-anchor="middle" font-size="10" fill="white" font-weight="bold">🏛 ADMIN BLOCK</text>
-              <text x="350" y="252" text-anchor="middle" font-size="8"  fill="#fde68a">Vice Chancellor's Office</text>
-              <text x="350" y="264" text-anchor="middle" font-size="7"  fill="#fde68a">Registrar · Finance</text>
+              <text x="350" y="252" text-anchor="middle" font-size="8"  fill="#bae6fd">Vice Chancellor's Office</text>
+              <text x="350" y="264" text-anchor="middle" font-size="7"  fill="#bae6fd">Registrar · Finance</text>
             </g>
 
             <!-- MARINE -->
@@ -216,31 +216,31 @@ function renderMap() {
             </g>
 
             <!-- Main Gate -->
-            <rect x="315" y="494" width="70" height="14" rx="4" fill="#8b1a1a"/>
+            <rect x="315" y="494" width="70" height="14" rx="4" fill="#1d4ed8"/>
             <text x="350" y="505" text-anchor="middle" font-size="8" fill="white" font-weight="bold">MAIN GATE</text>
             <!-- Gate marker (start point) -->
-            <circle id="gate-dot" cx="350" cy="490" r="7" fill="#8b1a1a" stroke="white" stroke-width="2"/>
+            <circle id="gate-dot" cx="350" cy="490" r="7" fill="#1d4ed8" stroke="white" stroke-width="2"/>
 
             <!-- Destination marker (shown when navigating) -->
             <g id="dest-marker" opacity="0">
-              <circle id="dest-circle" cx="0" cy="0" r="12" fill="white" stroke="#8b1a1a" stroke-width="3"/>
+              <circle id="dest-circle" cx="0" cy="0" r="12" fill="white" stroke="#1d4ed8" stroke-width="3"/>
               <text id="dest-icon" x="0" y="5" text-anchor="middle" font-size="12">📍</text>
             </g>
 
             <!-- Compass -->
             <g transform="translate(672,472)">
               <circle r="22" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
-              <text x="0" y="-7"  text-anchor="middle" font-size="11" fill="#8b1a1a" font-weight="bold">N</text>
-              <path d="M0,-16 L5,2 L0,7 L-5,2 Z" fill="#8b1a1a"/>
+              <text x="0" y="-7"  text-anchor="middle" font-size="11" fill="#1d4ed8" font-weight="bold">N</text>
+              <path d="M0,-16 L5,2 L0,7 L-5,2 Z" fill="#1d4ed8"/>
               <path d="M0,18 L5,0 L0,-5 L-5,0 Z"  fill="#ccc"/>
             </g>
 
             <!-- Legend -->
             <g transform="translate(8,480)">
               <rect width="145" height="22" rx="4" fill="white" opacity="0.85"/>
-              <circle cx="12" cy="11" r="4" fill="#8b1a1a"/>
+              <circle cx="12" cy="11" r="4" fill="#1d4ed8"/>
               <text x="20" y="15" font-size="8" fill="#374151">Route from Main Gate</text>
-              <line x1="80" y1="11" x2="100" y2="11" stroke="#8b1a1a" stroke-width="2.5" stroke-dasharray="4,3"/>
+              <line x1="80" y1="11" x2="100" y2="11" stroke="#1d4ed8" stroke-width="2.5" stroke-dasharray="4,3"/>
             </g>
 
           </svg>

@@ -10,7 +10,7 @@ function renderEvents() {
     Academic: { bg:'#dbeafe', color:'#1d4ed8', emoji:'🎓' },
     Sports:   { bg:'#dcfce7', color:'#15803d', emoji:'🏆' },
     Cultural: { bg:'#fce7f3', color:'#be185d', emoji:'🎭' },
-    Career:   { bg:'#fef9c3', color:'#a16207', emoji:'💼' },
+    Career:   { bg:'#e0f2fe', color:'#a16207', emoji:'💼' },
     Workshop: { bg:'#ede9fe', color:'#7c3aed', emoji:'🛠️' },
     Social:   { bg:'#ffedd5', color:'#c2410c', emoji:'🤝' },
   };

@@ -47,9 +47,9 @@ function renderAnalytics() {
         <div class="chart-container" style="height:220px">
           <canvas id="chartEnrollment"></canvas>
         </div>
-        <div class="mt-4 flex items-center justify-between text-xs text-gray-500 rounded-xl p-3" style="background:#fef9c3">
-          <span class="font-medium font-medium" style="color:#8b1a1a">Growth since 2026</span>
-          <span class="font-black text-base" style="color:#ca8a04">+27.0%</span>
+        <div class="mt-4 flex items-center justify-between text-xs text-gray-500 rounded-xl p-3" style="background:#e0f2fe">
+          <span class="font-medium font-medium" style="color:#1d4ed8">Growth since 2026</span>
+          <span class="font-black text-base" style="color:#0ea5e9">+27.0%</span>
         </div>
       </div>
     </div>
@@ -94,68 +94,10 @@ function renderAnalytics() {
         <div class="chart-container" style="height:220px">
           <canvas id="chartGpa"></canvas>
         </div>
-        <div class="mt-3 flex items-center gap-2 text-xs rounded-xl p-3" style="background:#fef9c3;color:#8b1a1a"">
+        <div class="mt-3 flex items-center gap-2 text-xs rounded-xl p-3" style="background:#e0f2fe;color:#1d4ed8"">
           <span>🏆</span>
           <span class="font-medium">Dean's List (GPA 3.5+): <strong>${AppData.analytics.gpaDistribution[0].count.toLocaleString()} students</strong></span>
         </div>
-      </div>
-    </div>
-
-    <!-- High Demand Courses -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-      <h3 class="font-bold text-gray-800 mb-1">High Demand Courses — 5 Year Trend</h3>
-      <p class="text-xs text-gray-400 mb-4">Course enrollment demand by year (2022–2026)</p>
-      <div class="chart-container" style="height:300px">
-        <canvas id="chartHighDemand"></canvas>
-      </div>
-    </div>
-
-    <!-- Demand Table -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-      <div class="px-5 py-4 border-b border-gray-100">
-        <h3 class="font-bold text-gray-800">Course Demand Rankings (2026)</h3>
-        <p class="text-xs text-gray-400">Sorted by current enrollment demand</p>
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="bg-gray-50 text-xs text-gray-500 uppercase tracking-wide">
-            <tr>
-              <th class="px-5 py-3 text-left">Rank</th>
-              <th class="px-5 py-3 text-left">Course</th>
-              <th class="px-5 py-3 text-left">Dept</th>
-              <th class="px-5 py-3 text-right">2022</th>
-              <th class="px-5 py-3 text-right">2023</th>
-              <th class="px-5 py-3 text-right">2024</th>
-              <th class="px-5 py-3 text-right">2025</th>
-              <th class="px-5 py-3 text-right">2026</th>
-              <th class="px-5 py-3 text-right">Growth</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${a.highDemandCourses
-              .sort((a,b) => b.y2026 - a.y2026)
-              .map((c, i) => {
-                const growth = Math.round(((c.y2026 - c.y2022) / c.y2022) * 100);
-                return `
-                  <tr class="border-t border-gray-50">
-                    <td class="px-5 py-3">
-                      <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black text-white inline-flex" style="background:${deptColor(c.dept)}">${i+1}</span>
-                    </td>
-                    <td class="px-5 py-3 font-semibold text-gray-800">${c.icon} ${c.course}</td>
-                    <td class="px-5 py-3"><span class="badge" style="background:${deptBg(c.dept)};color:${deptColor(c.dept)}">${c.dept}</span></td>
-                    <td class="px-5 py-3 text-right text-gray-500">${c.y2022}</td>
-                    <td class="px-5 py-3 text-right text-gray-500">${c.y2023}</td>
-                    <td class="px-5 py-3 text-right text-gray-500">${c.y2024}</td>
-                    <td class="px-5 py-3 text-right text-gray-500">${c.y2025}</td>
-                    <td class="px-5 py-3 text-right font-black" style="color:${deptColor(c.dept)}">${c.y2026.toLocaleString()}</td>
-                    <td class="px-5 py-3 text-right">
-                      <span class="badge bg-green-100 text-green-700">+${growth}%</span>
-                    </td>
-                  </tr>
-                `;
-              }).join('')}
-          </tbody>
-        </table>
       </div>
     </div>
 
@@ -182,7 +124,7 @@ function initCharts() {
         datasets: [{
           label: 'Students',
           data:  a.yearwiseStrength.map(y => y.students),
-          backgroundColor: ['#8b1a1a','#b81c1c','#e89090','#faeaea'],
+          backgroundColor: ['#1d4ed8','#2563eb','#e89090','#dbeafe'],
           borderRadius: 8,
           borderSkipped: false,
         }]
@@ -209,10 +151,10 @@ function initCharts() {
         datasets: [{
           label: 'Total Students',
           data:  a.enrollmentTrend.map(x => x.students),
-          borderColor: '#ca8a04',
-          backgroundColor: 'rgba(202,138,4,0.08)',
+          borderColor: '#0ea5e9',
+          backgroundColor: 'rgba(14,165,233,0.08)',
           borderWidth: 3,
-          pointBackgroundColor: '#ca8a04',
+          pointBackgroundColor: '#0ea5e9',
           pointRadius: 5,
           tension: 0.4,
           fill: true,
@@ -264,7 +206,7 @@ function initCharts() {
         datasets: [{
           label: 'Students',
           data:  a.gpaDistribution.map(g => g.count),
-          backgroundColor: ['#8b1a1a','#b81c1c','#ca8a04','#d97706','#f59e0b'],
+          backgroundColor: ['#1d4ed8','#2563eb','#0ea5e9','#d97706','#f59e0b'],
           borderRadius: 6,
           borderSkipped: false,
         }]
@@ -280,37 +222,4 @@ function initCharts() {
     }));
   }
 
-  // 5. High demand courses — multi-line
-  const ctx5 = document.getElementById('chartHighDemand');
-  if (ctx5) {
-    const colors = ['#8b1a1a','#ca8a04','#6b1010','#d97706','#b81c1c','#a16207'];
-    const years  = ['2022','2023','2024','2025','2026'];
-    const courses = AppData.analytics.highDemandCourses;
-    window._charts.push(new Chart(ctx5, {
-      type: 'line',
-      data: {
-        labels: years,
-        datasets: courses.map((c, i) => ({
-          label: c.course,
-          data: [c.y2022, c.y2023, c.y2024, c.y2025, c.y2026],
-          borderColor: colors[i % colors.length],
-          backgroundColor: 'transparent',
-          borderWidth: 2.5,
-          pointBackgroundColor: colors[i % colors.length],
-          pointRadius: 4,
-          tension: 0.4,
-        }))
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { position:'bottom', labels: { font: defaultFont, usePointStyle: true, padding: 16 } }
-        },
-        scales: {
-          x: { grid: { display: false }, ticks: { font: defaultFont } },
-          y: { grid: { color:'#f1f5f9' }, ticks: { font: defaultFont }, title: { display: true, text: 'Enrollments', font: defaultFont } }
-        }
-      }
-    }));
-  }
 }

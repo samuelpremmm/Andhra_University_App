@@ -8,7 +8,7 @@ function renderAlumni() {
   <div class="p-6 space-y-5">
 
     <!-- Banner -->
-    <div class="rounded-2xl p-6 text-white shadow-xl relative overflow-hidden" style="background:linear-gradient(135deg,#200505 0%,#6b1010 40%,#8b1a1a 70%,#4a0b0b 100%)">
+    <div class="rounded-2xl p-6 text-white shadow-xl relative overflow-hidden" style="background:linear-gradient(135deg,#0f172a 0%,#1e40af 40%,#1d4ed8 70%,#1e3a8a 100%)">
       <h2 class="text-2xl font-bold mb-1">AU Alumni Network</h2>
       <p class="text-sm" style="color:#fde047">Connecting graduates since 1926 · ${alumni.length}+ Notable Alumni listed</p>
       <div class="mt-4 flex gap-3 flex-wrap">
@@ -78,7 +78,7 @@ function renderAlumni() {
               <td class="px-4 py-3 text-gray-600 text-xs">${a.company}</td>
               <td class="px-4 py-3 text-gray-400 text-xs">📍 ${a.location}</td>
               <td class="px-4 py-3 text-center">
-                <button onclick="alert('Connection request sent to ${a.name}!')" class="text-xs font-semibold px-3 py-1 rounded-lg" style="background:#fdf3f3;color:#8b1a1a" onmouseover="this.style.background='#8b1a1a';this.style.color='white'" onmouseout="this.style.background='#fdf3f3';this.style.color='#8b1a1a'">Connect</button>
+                <button onclick="alert('Connection request sent to ${a.name}!')" class="text-xs font-semibold px-3 py-1 rounded-lg" style="background:#eff6ff;color:#1d4ed8" onmouseover="this.style.background='#1d4ed8';this.style.color='white'" onmouseout="this.style.background='#eff6ff';this.style.color='#1d4ed8'">Connect</button>
               </td>
             </tr>`).join('')}
           </tbody>
@@ -115,8 +115,8 @@ function showAlumniRegister() {
         <input type="text" placeholder="Current Company" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary-400"/>
         <input type="text" placeholder="Current Role / Designation" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary-400"/>
         <input type="email" placeholder="Email Address" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primary-400"/>
-        <button onclick="document.getElementById('modal-content').innerHTML='<div class=\'p-8 text-center\'><div class=\'text-4xl mb-3\'>🎓</div><h2 class=\'text-xl font-black text-gray-800 mb-2\'>Registered!</h2><p class=\'text-sm text-gray-500 mb-5\'>Welcome to the AU Alumni Network. Your profile is under review.</p><button onclick=\'closeModal()\' class=\'px-6 py-2.5 rounded-xl text-white font-semibold text-sm\' style=\'background:#8b1a1a\'>Close</button></div>'"
-          class="w-full py-2.5 rounded-xl text-white font-bold text-sm" style="background:#8b1a1a">
+        <button onclick="document.getElementById('modal-content').innerHTML='<div class=\'p-8 text-center\'><div class=\'text-4xl mb-3\'>🎓</div><h2 class=\'text-xl font-black text-gray-800 mb-2\'>Registered!</h2><p class=\'text-sm text-gray-500 mb-5\'>Welcome to the AU Alumni Network. Your profile is under review.</p><button onclick=\'closeModal()\' class=\'px-6 py-2.5 rounded-xl text-white font-semibold text-sm\' style=\'background:#1d4ed8\'>Close</button></div>'"
+          class="w-full py-2.5 rounded-xl text-white font-bold text-sm" style="background:#1d4ed8">
           Register
         </button>
       </div>
