@@ -51,6 +51,16 @@ function navigate(page, params) {
   const hash = params ? `#${page}/${params}` : `#${page}`;
   if (window.location.hash !== hash) window.location.hash = hash;
   else renderCurrentPage();
+  // Auto-close sidebar on mobile after navigation
+  if (window.innerWidth < 768) {
+    document.getElementById('sidebar').classList.add('collapsed');
+  }
+}
+
+// ---- Back button ----
+function goBack() {
+  if (window.history.length > 1) history.back();
+  else navigate('dashboard');
 }
 
 // ---- Get Current Route ----
@@ -508,14 +518,49 @@ function updateUserInfo() {
   if (hAvt)  hAvt.textContent  = letter;
 }
 
+// ---- Bottom nav highlight ----
+function updateBottomNav(page) {
+  document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+    btn.style.color = btn.dataset.page === page ? '#1d4ed8' : '#94a3b8';
+    btn.style.fontWeight = btn.dataset.page === page ? '700' : '500';
+  });
+}
+
 // ---- Init ----
-window.addEventListener('hashchange', renderCurrentPage);
+window.addEventListener('hashchange', () => {
+  renderCurrentPage();
+  updateBottomNav(getRoute().page);
+});
 window.addEventListener('load', () => {
+  // Collapse sidebar on mobile by default
+  if (window.innerWidth < 768) {
+    document.getElementById('sidebar').classList.add('collapsed');
+  }
   buildNav();
+  buildBottomNav();
   updateDate();
   renderNotifications();
   updateUserInfo();
   if (!window.location.hash) window.location.hash = '#dashboard';
   renderCurrentPage();
+  updateBottomNav(getRoute().page);
   if (!sessionStorage.getItem('au_role')) { showLogin(); }
 });
+
+// ---- Build bottom nav ----
+function buildBottomNav() {
+  const role = getCurrentRole();
+  const allowed = ROLES[role] ? ROLES[role].nav : [];
+  const priority = ['dashboard','exams','fees','events','certificates','students','classes','analytics','map'];
+  const items = priority.filter(p => allowed.includes(p)).slice(0, 5);
+  const nav = document.getElementById('bottom-nav');
+  if (!nav) return;
+  nav.innerHTML = items.map(page => {
+    const info = NAV_ITEMS.find(n => n.page === page);
+    if (!info) return '';
+    return `<button class="bottom-nav-btn flex flex-col items-center gap-0.5 flex-1 py-2 border-none bg-transparent cursor-pointer" data-page="${page}" onclick="navigate('${page}')" style="color:#94a3b8;font-size:0.6rem;font-weight:500;min-width:0">
+      <span style="font-size:1.35rem;line-height:1">${info.icon}</span>
+      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:54px">${info.label.split(' ')[0]}</span>
+    </button>`;
+  }).join('');
+}
