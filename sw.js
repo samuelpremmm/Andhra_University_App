@@ -1,11 +1,10 @@
 // ============================================================
-// Andhra University Portal — Service Worker v4
-// Works on both localhost and GitHub Pages subdirectory
+// Andhra University Portal — Service Worker v6
+// Network-first for JS so updates show immediately
 // ============================================================
 
-const CACHE_NAME = 'au-portal-v5';
+const CACHE_NAME = 'au-portal-v6';
 
-// Detect base path automatically (works for both localhost and GitHub Pages)
 const BASE = self.registration.scope;
 
 const SHELL_ASSETS = [
@@ -13,24 +12,6 @@ const SHELL_ASSETS = [
   BASE + 'index.html',
   BASE + 'css/style.css',
   BASE + 'manifest.json',
-  BASE + 'js/app.js',
-  BASE + 'js/data.js',
-  BASE + 'js/chatbot.js',
-  BASE + 'js/pages/dashboard.js',
-  BASE + 'js/pages/students.js',
-  BASE + 'js/pages/faculty.js',
-  BASE + 'js/pages/classes.js',
-  BASE + 'js/pages/events.js',
-  BASE + 'js/pages/exams.js',
-  BASE + 'js/pages/departments.js',
-  BASE + 'js/pages/analytics.js',
-  BASE + 'js/pages/fees.js',
-  BASE + 'js/pages/placements.js',
-  BASE + 'js/pages/certificates.js',
-  BASE + 'js/pages/map.js',
-  BASE + 'js/pages/library.js',
-  BASE + 'js/pages/hostel.js',
-  BASE + 'js/pages/alumni.js',
   BASE + 'icons/icon.svg',
   BASE + 'icons/icon-192.png',
   BASE + 'icons/icon-512.png',
@@ -57,16 +38,13 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-// ── Activate ─────────────────────────────────────────────────
+// ── Activate — delete ALL old caches ─────────────────────────
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      )
-    )
+      Promise.all(keys.map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 // ── Fetch ─────────────────────────────────────────────────────
@@ -81,7 +59,13 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // App shell — cache first, network fallback
+  // JS files — network first so updates show immediately
+  if (url.pathname.endsWith('.js')) {
+    event.respondWith(networkFirst(event.request));
+    return;
+  }
+
+  // App shell (HTML, CSS, icons) — cache first, network fallback
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
@@ -101,6 +85,19 @@ self.addEventListener('fetch', event => {
   );
 });
 
+// ── Network first (JS files) ──────────────────────────────────
+function networkFirst(request) {
+  return caches.open(CACHE_NAME).then(cache =>
+    fetch(request)
+      .then(response => {
+        if (response.ok) cache.put(request, response.clone());
+        return response;
+      })
+      .catch(() => cache.match(request))
+  );
+}
+
+// ── Stale while revalidate (CDN) ─────────────────────────────
 function staleWhileRevalidate(request) {
   return caches.open(CACHE_NAME).then(cache =>
     cache.match(request).then(cached => {
