@@ -609,7 +609,7 @@ function showFacultyFeedback() {
             </div>
             <textarea id="review-${i}" rows="2" placeholder="Write your review (optional)..."
               class="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-400 resize-none mt-1"></textarea>
-            <button id="fb-btn-${i}" onclick="submitFeedback(${i},'${f.name.replace(/'/g,'\\'')}')"
+            <button id="fb-btn-${i}" onclick="submitFeedback(${i},this)"
               class="mt-2 w-full py-2 rounded-lg text-white font-bold text-xs transition-all" style="background:#1d4ed8">
               Submit Feedback
             </button>
@@ -628,10 +628,12 @@ function setRating(idx, val) {
   });
 }
 
-function submitFeedback(idx, name) {
+function submitFeedback(idx, btnEl) {
   const rating = document.getElementById('stars-' + idx)?.dataset.rating;
-  const btn    = document.getElementById('fb-btn-' + idx);
+  const btn    = btnEl || document.getElementById('fb-btn-' + idx);
   if (!btn) return;
+  const card   = document.getElementById('fb-card-' + idx);
+  const name   = card ? card.querySelector('.font-bold')?.textContent?.trim() : 'Faculty';
   if (!rating || rating === '0') {
     btn.textContent = '⚠️ Please give a star rating first!';
     btn.style.background = '#dc2626';
