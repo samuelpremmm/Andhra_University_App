@@ -1,9 +1,9 @@
 // ============================================================
-// Andhra University Portal — Service Worker v6
+// Andhra University Portal — Service Worker v7
 // Network-first for JS so updates show immediately
 // ============================================================
 
-const CACHE_NAME = 'au-portal-v6';
+const CACHE_NAME = 'au-portal-v7';
 
 const BASE = self.registration.scope;
 
